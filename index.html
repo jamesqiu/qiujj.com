@@ -31,6 +31,7 @@
 	<h1 align=center>成长、思想、极客</h1>
 	<h2>欢迎光临，本站将增加<u>留言板</u>功能，敬请关注！</h2>
 	<h3 align=right> —— jamesqiu</h3>
+	<span id="wb_connect_btn"></span>
 	<div>
 		<table class="favlist">
 			<caption><b>近期关注列表</b></caption>
@@ -202,5 +203,26 @@
 		<h3>Powered by WebFirst-core</h3>
 	</div>
 
+<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2519201762"></script>
+<script type="text/javascript">
+WB2.anyWhere(function(W){
+	W.widget.connectButton({
+		id: "wb_connect_btn"
+	});
+	
+	W.widget.connectButton({
+		id: "wb_connect_btn2",
+		callback : {
+			login:function(o){
+				alert("1: "+o.screen_name)
+			},
+			logout:function(){
+				alert('logout 1');
+			}
+		}
+	});
+});
+</script>
+	
 </body>
 </html>
