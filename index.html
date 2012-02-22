@@ -32,7 +32,9 @@
 	<h2>欢迎光临，本站将增加<u>留言板</u>功能，敬请关注！</h2>
 	<div style="height: 70px">
 		<div style="float: left; margin-left: 50px"><h3 align=right> —— jamesqiu</h3></div>
-		<div style="float: right"><span id="wb_connect_btn"></span></div>
+		<div style="float: right">
+			<span id="wb_connect_btn"></span>
+		</div>
 	</div>
 	
 	<div>
@@ -227,5 +229,17 @@ WB2.anyWhere(function(W){
 });
 </script>
 	
+<div id="cse" style="float: right; width: 80%">Loading ...</div>
+<script src="http://www.g.cn/jsapi" type="text/javascript"></script>
+<script type="text/javascript"> 
+  google.load('search', '1', {language : 'zh-CN', style : google.loader.themes.MINIMALIST});
+  google.setOnLoadCallback(function() {
+    var customSearchOptions = {};  var customSearchControl = new google.search.CustomSearchControl(
+      '000124085029156139824:u9fa1kwulne', customSearchOptions);
+    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+    customSearchControl.draw('cse');
+  }, true);
+</script>
+		
 </body>
 </html>
