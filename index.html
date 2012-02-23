@@ -32,11 +32,36 @@
 	<h2>欢迎光临，本站将增加<u>留言板</u>功能，敬请关注！</h2>
 	<div style="height: 70px">
 		<div style="float: left; margin-left: 50px"><h3 align=right> —— jamesqiu</h3></div>
+		<!-- 以新浪用户登录 -->
 		<div style="float: right">
 			<span id="wb_connect_btn"></span>
 		</div>
+		<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2519201762"></script>
+		<script type="text/javascript">
+		WB2.anyWhere(function(W){
+			W.widget.connectButton({
+				id: "wb_connect_btn"
+			});
+			
+			W.widget.connectButton({
+				id: "wb_connect_btn2",
+				callback : {
+					login:function(o){
+						alert("1: "+o.screen_name)
+					},
+					logout:function(){
+						alert('logout 1');
+					}
+				}
+			});
+		});
+		</script>
 	</div>
-	
+	<!-- 新浪微博秀 -->
+	<iframe width="70%" height="450" class="share_self" frameborder="0" scrolling="no" 
+		src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1403665974&verifier=023d121f&dpc=1">
+	</iframe><br/><br/>
+
 	<div>
 		<table class="favlist">
 			<caption><b>近期关注列表</b></caption>
@@ -200,6 +225,7 @@
 					</td>
 				</tr>
 			</tbody>
+			<tfoot><tr><td colspan=2 align=center><i>--- The End ---</i></td></tr></tfoot>
 		</table>
 	</div>
 
@@ -208,29 +234,9 @@
 		<h3>Powered by WebFirst-core</h3>
 	</div>
 
-<script type="text/javascript" src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=2519201762"></script>
-<script type="text/javascript">
-WB2.anyWhere(function(W){
-	W.widget.connectButton({
-		id: "wb_connect_btn"
-	});
-	
-	W.widget.connectButton({
-		id: "wb_connect_btn2",
-		callback : {
-			login:function(o){
-				alert("1: "+o.screen_name)
-			},
-			logout:function(){
-				alert('logout 1');
-			}
-		}
-	});
-});
-</script>
-	
-<div id="cse" style="float: right; width: 80%">Loading ...</div>
-<script src="http://www.g.cn/jsapi" type="text/javascript"></script>
+<!-- Google站点搜索 -->
+<center><div id="cse" style="width: 80%" align=center>Loading ...</div></center>
+<script src="https://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript"> 
   google.load('search', '1', {language : 'zh-CN', style : google.loader.themes.MINIMALIST});
   google.setOnLoadCallback(function() {
