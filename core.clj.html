@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>F:\data\__Amazon\ec2\core.clj.html</title>
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="clojure">
+<meta name="settings" content="use_css">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #cccccc; background-color: #000000; }
+body { font-family: monospace; color: #cccccc; background-color: #000000; }
+.Identifier { color: #40ffff; }
+.Comment { color: #80a0ff; }
+.Statement { color: #ffff00; }
+.Constant { color: #ffa0a0; }
+.PreProc { color: #ff80ff; }
+.Special { color: #ffa500; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="Special">(</span><span class="PreProc">ns</span> hiccup.core
+  <span class="Constant">&quot;Library for rendering a tree of vectors into a string of HTML.</span>
+<span class="Constant">  Pre-compiles where possible for performance.&quot;</span>
+  <span class="Special">(</span><span class="Statement">:import</span> <span class="Special">[</span>clojure.lang IPersistentVector ISeq<span class="Special">]</span>
+           java.net.URI<span class="Special">))</span>
+
+<span class="Comment">;; Pulled from old-contrib to avoid dependency</span>
+<span class="Special">(</span><span class="PreProc">defn</span> as-str
+  <span class="Special">([]</span> <span class="Constant">&quot;&quot;</span><span class="Special">)</span>
+  <span class="Special">([</span>x<span class="Special">]</span> <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">instance?</span> clojure.lang.Named x<span class="Special">)</span>
+         <span class="Special">(</span><span class="Identifier">name</span> x<span class="Special">)</span>
+         <span class="Special">(</span><span class="Identifier">str</span> x<span class="Special">)))</span>
+  <span class="Special">([</span>x <span class="Special">&amp;</span> ys<span class="Special">]</span>
+     <span class="Special">((</span><span class="Special">fn</span> <span class="Special">[</span>^StringBuilder sb more<span class="Special">]</span>
+        <span class="Special">(</span><span class="Special">if</span> more
+          <span class="Special">(</span><span class="Statement">recur</span> <span class="Special">(</span><span class="Special">.</span> sb  <span class="Special">(</span>append <span class="Special">(</span>as-str <span class="Special">(</span><span class="Identifier">first</span> more<span class="Special">))))</span> <span class="Special">(</span><span class="Identifier">next</span> more<span class="Special">))</span>
+          <span class="Special">(</span><span class="Identifier">str</span> sb<span class="Special">)))</span>
+      <span class="Special">(</span><span class="Special">new</span> StringBuilder ^String <span class="Special">(</span>as-str x<span class="Special">))</span> ys<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="Special">def</span> ^<span class="Statement">:dynamic</span> *html-mode* <span class="Statement">:xml</span><span class="Special">)</span>
+
+<span class="Special">(</span><span class="PreProc">defn</span> escape-html
+  <span class="Constant">&quot;Change special characters into HTML character entities.&quot;</span>
+  <span class="Special">[</span>text<span class="Special">]</span>
+  <span class="Special">(</span><span class="PreProc">..</span> ^String <span class="Special">(</span>as-str text<span class="Special">)</span>
+    <span class="Special">(</span><span class="Identifier">replace</span> <span class="Constant">&quot;&amp;&quot;</span>  <span class="Constant">&quot;&amp;amp;&quot;</span><span class="Special">)</span>
+    <span class="Special">(</span><span class="Identifier">replace</span> <span class="Constant">&quot;&lt;&quot;</span>  <span class="Constant">&quot;&amp;lt;&quot;</span><span class="Special">)</span>
+    <span class="Special">(</span><span class="Identifier">replace</span> <span class="Constant">&quot;&gt;&quot;</span>  <span class="Constant">&quot;&amp;gt;&quot;</span><span class="Special">)</span>
+    <span class="Special">(</span><span class="Identifier">replace</span> <span class="Constant">&quot;\&quot;&quot;</span> <span class="Constant">&quot;&amp;quot;&quot;</span><span class="Special">)))</span>
+
+<span class="Special">(</span><span class="Special">def</span> h escape-html<span class="Special">)</span>  <span class="Comment">; alias for escape-html</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> xml-mode? <span class="Special">[]</span>
+  <span class="Special">(</span><span class="Identifier">=</span> *html-mode* <span class="Statement">:xml</span><span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> end-tag <span class="Special">[]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span>xml-mode?<span class="Special">)</span> <span class="Constant">&quot; /&gt;&quot;</span> <span class="Constant">&quot;&gt;&quot;</span><span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> xml-attribute <span class="Special">[</span><span class="Identifier">name</span> value<span class="Special">]</span>
+  <span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot; &quot;</span> <span class="Special">(</span>as-str <span class="Identifier">name</span><span class="Special">)</span> <span class="Constant">&quot;=\&quot;&quot;</span> <span class="Special">(</span>escape-html value<span class="Special">)</span> <span class="Constant">&quot;\&quot;&quot;</span><span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> render-attribute <span class="Special">[[</span><span class="Identifier">name</span> value<span class="Special">]]</span>
+  <span class="Special">(</span><span class="Statement">cond</span>
+    <span class="Special">(</span><span class="Identifier">true?</span> value<span class="Special">)</span>
+      <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span>xml-mode?<span class="Special">)</span>
+        <span class="Special">(</span>xml-attribute <span class="Identifier">name</span> <span class="Identifier">name</span><span class="Special">)</span>
+        <span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot; &quot;</span> <span class="Special">(</span>as-str <span class="Identifier">name</span><span class="Special">)))</span>
+    <span class="Special">(</span><span class="Identifier">not</span> value<span class="Special">)</span>
+      <span class="Constant">&quot;&quot;</span>
+    <span class="Statement">:else</span>
+      <span class="Special">(</span>xml-attribute <span class="Identifier">name</span> value<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> render-attr-map <span class="Special">[</span>attrs<span class="Special">]</span>
+  <span class="Special">(</span><span class="Identifier">apply</span> <span class="Identifier">str</span>
+    <span class="Special">(</span><span class="Identifier">sort</span> <span class="Special">(</span><span class="Statement">map</span> render-attribute attrs<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="Special">def</span> ^<span class="Special">{</span><span class="Statement">:doc</span> <span class="Constant">&quot;Regular expression that parses a CSS-style id and class from a tag name.&quot;</span> <span class="Statement">:private</span> <span class="Constant">true</span><span class="Special">}</span>
+  re-tag <span class="Constant">#&quot;([^\s\.#]+)(?:#([^\s\.#]+))?(?:\.([^\s#]+))?&quot;</span><span class="Special">)</span>
+
+<span class="Special">(</span><span class="Special">def</span> ^<span class="Special">{</span><span class="Statement">:doc</span> <span class="Constant">&quot;A list of tags that need an explicit ending tag when rendered.&quot;</span> <span class="Statement">:private</span> <span class="Constant">true</span><span class="Special">}</span>
+  container-tags
+  <span class="Special">#{</span><span class="Constant">&quot;a&quot;</span> <span class="Constant">&quot;b&quot;</span> <span class="Constant">&quot;body&quot;</span> <span class="Constant">&quot;canvas&quot;</span> <span class="Constant">&quot;dd&quot;</span> <span class="Constant">&quot;div&quot;</span> <span class="Constant">&quot;dl&quot;</span> <span class="Constant">&quot;dt&quot;</span> <span class="Constant">&quot;em&quot;</span> <span class="Constant">&quot;fieldset&quot;</span> <span class="Constant">&quot;form&quot;</span> <span class="Constant">&quot;h1&quot;</span> <span class="Constant">&quot;h2&quot;</span> <span class="Constant">&quot;h3&quot;</span>
+    <span class="Constant">&quot;h4&quot;</span> <span class="Constant">&quot;h5&quot;</span> <span class="Constant">&quot;h6&quot;</span> <span class="Constant">&quot;head&quot;</span> <span class="Constant">&quot;html&quot;</span> <span class="Constant">&quot;i&quot;</span> <span class="Constant">&quot;iframe&quot;</span> <span class="Constant">&quot;label&quot;</span> <span class="Constant">&quot;li&quot;</span> <span class="Constant">&quot;ol&quot;</span> <span class="Constant">&quot;option&quot;</span> <span class="Constant">&quot;pre&quot;</span>
+    <span class="Constant">&quot;script&quot;</span> <span class="Constant">&quot;span&quot;</span> <span class="Constant">&quot;strong&quot;</span> <span class="Constant">&quot;style&quot;</span> <span class="Constant">&quot;table&quot;</span> <span class="Constant">&quot;textarea&quot;</span> <span class="Constant">&quot;ul&quot;</span><span class="Special">})</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> normalize-element
+  <span class="Constant">&quot;Ensure a tag vector is of the form [tag-name attrs content].&quot;</span>
+  <span class="Special">[[</span>tag <span class="Special">&amp;</span> content<span class="Special">]]</span>
+  <span class="Special">(</span><span class="Statement">when</span> <span class="Special">(</span><span class="Identifier">not</span> <span class="Special">(</span><span class="PreProc">or</span> <span class="Special">(</span><span class="Identifier">keyword?</span> tag<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">symbol?</span> tag<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">string?</span> tag<span class="Special">)))</span>
+    <span class="Special">(</span><span class="Statement">throw</span> <span class="Special">(</span>IllegalArgumentException. <span class="Special">(</span><span class="Identifier">str</span> tag <span class="Constant">&quot; is not a valid tag name.&quot;</span><span class="Special">))))</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[[</span>_ tag id <span class="Identifier">class</span><span class="Special">]</span> <span class="Special">(</span><span class="Identifier">re-matches</span> re-tag <span class="Special">(</span>as-str tag<span class="Special">))</span>
+        tag-attrs        <span class="Special">{</span><span class="Statement">:id</span> id
+                          <span class="Statement">:class</span> <span class="Special">(</span><span class="Special">if</span> <span class="Identifier">class</span> <span class="Special">(</span>.replace ^String <span class="Identifier">class</span> <span class="Constant">&quot;.&quot;</span> <span class="Constant">&quot; &quot;</span><span class="Special">))}</span>
+        map-attrs        <span class="Special">(</span><span class="Identifier">first</span> content<span class="Special">)]</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">map?</span> map-attrs<span class="Special">)</span>
+      <span class="Special">[</span>tag <span class="Special">(</span><span class="Identifier">merge</span> tag-attrs map-attrs<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">next</span> content<span class="Special">)]</span>
+      <span class="Special">[</span>tag tag-attrs content<span class="Special">])))</span>
+
+<span class="Special">(</span><span class="PreProc">defmulti</span> render-html
+  <span class="Constant">&quot;Turn a Clojure data type into a string of HTML.&quot;</span>
+  <span class="Special">{</span><span class="Statement">:private</span> <span class="Constant">true</span><span class="Special">}</span>
+  <span class="Identifier">type</span><span class="Special">)</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> render-element
+  <span class="Constant">&quot;Render an tag vector as a HTML element.&quot;</span>
+  <span class="Special">[</span>element<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[[</span>tag attrs content<span class="Special">]</span> <span class="Special">(</span>normalize-element element<span class="Special">)]</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="PreProc">or</span> content <span class="Special">(</span>container-tags tag<span class="Special">))</span>
+      <span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag <span class="Special">(</span>render-attr-map attrs<span class="Special">)</span> <span class="Constant">&quot;&gt;&quot;</span>
+           <span class="Special">(</span>render-html content<span class="Special">)</span>
+           <span class="Constant">&quot;&lt;/&quot;</span> tag <span class="Constant">&quot;&gt;&quot;</span><span class="Special">)</span>
+      <span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag <span class="Special">(</span>render-attr-map attrs<span class="Special">)</span> <span class="Special">(</span>end-tag<span class="Special">)))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> render-html IPersistentVector
+  <span class="Special">[</span>element<span class="Special">]</span>
+  <span class="Special">(</span>render-element element<span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> render-html ISeq <span class="Special">[</span>coll<span class="Special">]</span>
+  <span class="Special">(</span><span class="Identifier">apply</span> <span class="Identifier">str</span> <span class="Special">(</span><span class="Statement">map</span> render-html coll<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> render-html <span class="Statement">:default</span> <span class="Special">[</span>x<span class="Special">]</span>
+  <span class="Special">(</span>as-str x<span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> unevaluated?
+  <span class="Constant">&quot;True if the expression has not been evaluated.&quot;</span>
+  <span class="Special">[</span>expr<span class="Special">]</span>
+  <span class="Special">(</span><span class="PreProc">or</span> <span class="Special">(</span><span class="Identifier">symbol?</span> expr<span class="Special">)</span>
+      <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span><span class="Identifier">seq?</span> expr<span class="Special">)</span>
+           <span class="Special">(</span><span class="Identifier">not=</span> <span class="Special">(</span><span class="Identifier">first</span> expr<span class="Special">)</span> <span class="Special">`</span><span class="Special">quote</span><span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defn</span> compile-attr-map
+  <span class="Constant">&quot;Returns an unevaluated form that will render the supplied map as HTML</span>
+<span class="Constant">  attributes.&quot;</span>
+  <span class="Special">[</span>attrs<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">some</span> unevaluated? <span class="Special">(</span><span class="Statement">mapcat</span> <span class="Identifier">identity</span> attrs<span class="Special">))</span>
+    <span class="Special">`</span><span class="Special">(</span><span class="Special">#'</span>render-attr-map <span class="Special">~</span>attrs<span class="Special">)</span>
+    <span class="Special">(</span>render-attr-map attrs<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> form-name
+  <span class="Constant">&quot;Get the name of the supplied form.&quot;</span>
+  <span class="Special">[</span>form<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span><span class="Identifier">seq?</span> form<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">symbol?</span> <span class="Special">(</span><span class="Identifier">first</span> form<span class="Special">)))</span>
+    <span class="Special">(</span><span class="Identifier">name</span> <span class="Special">(</span><span class="Identifier">first</span> form<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmulti</span> compile-form
+  <span class="Constant">&quot;Pre-compile certain standard forms, where possible.&quot;</span>
+  <span class="Special">{</span><span class="Statement">:private</span> <span class="Constant">true</span><span class="Special">}</span>
+  form-name<span class="Special">)</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-form <span class="Constant">&quot;for&quot;</span>
+  <span class="Special">[[</span>_ bindings body<span class="Special">]]</span>
+  <span class="Special">`</span><span class="Special">(</span><span class="Identifier">apply</span> <span class="Identifier">str</span> <span class="Special">(</span><span class="Statement">for</span> <span class="Special">~</span>bindings <span class="Special">(</span>html <span class="Special">~</span>body<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-form <span class="Constant">&quot;if&quot;</span>
+  <span class="Special">[[</span>_ condition <span class="Special">&amp;</span> body<span class="Special">]]</span>
+  <span class="Special">`</span><span class="Special">(</span><span class="Special">if</span> <span class="Special">~</span>condition <span class="Special">~@</span><span class="Special">(</span><span class="Statement">for</span> <span class="Special">[</span>x body<span class="Special">]</span> <span class="Special">`</span><span class="Special">(</span>html <span class="Special">~</span>x<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-form <span class="Statement">:default</span>
+  <span class="Special">[</span>expr<span class="Special">]</span>
+  <span class="Special">`</span><span class="Special">(</span><span class="Special">#'</span>render-html <span class="Special">~</span>expr<span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> not-hint?
+  <span class="Constant">&quot;True if x is not hinted to be the supplied type.&quot;</span>
+  <span class="Special">[</span>x <span class="Identifier">type</span><span class="Special">]</span>
+  <span class="Special">(</span><span class="Statement">if-let</span> <span class="Special">[</span>hint <span class="Special">(</span><span class="PreProc">-&gt;</span> x <span class="Identifier">meta</span> <span class="Statement">:tag</span><span class="Special">)]</span>
+    <span class="Special">(</span><span class="Identifier">not</span> <span class="Special">(</span><span class="Identifier">isa?</span> <span class="Special">(</span><span class="Identifier">eval</span> hint<span class="Special">)</span> <span class="Identifier">type</span><span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> hint?
+  <span class="Constant">&quot;True if x is hinted to be the supplied type.&quot;</span>
+  <span class="Special">[</span>x <span class="Identifier">type</span><span class="Special">]</span>
+  <span class="Special">(</span><span class="Statement">if-let</span> <span class="Special">[</span>hint <span class="Special">(</span><span class="PreProc">-&gt;</span> x <span class="Identifier">meta</span> <span class="Statement">:tag</span><span class="Special">)]</span>
+    <span class="Special">(</span><span class="Identifier">isa?</span> <span class="Special">(</span><span class="Identifier">eval</span> hint<span class="Special">)</span> <span class="Identifier">type</span><span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> literal?
+  <span class="Constant">&quot;True if x is a literal value that can be rendered as-is.&quot;</span>
+  <span class="Special">[</span>x<span class="Special">]</span>
+  <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span><span class="Identifier">not</span> <span class="Special">(</span>unevaluated? x<span class="Special">))</span>
+       <span class="Special">(</span><span class="PreProc">or</span> <span class="Special">(</span><span class="Identifier">not</span> <span class="Special">(</span><span class="PreProc">or</span> <span class="Special">(</span><span class="Identifier">vector?</span> x<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">map?</span> x<span class="Special">)))</span>
+           <span class="Special">(</span><span class="Identifier">every?</span> literal? x<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> not-implicit-map?
+  <span class="Constant">&quot;True if we can infer that x is not a map.&quot;</span>
+  <span class="Special">[</span>x<span class="Special">]</span>
+  <span class="Special">(</span><span class="PreProc">or</span> <span class="Special">(</span><span class="Identifier">=</span> <span class="Special">(</span>form-name x<span class="Special">)</span> <span class="Constant">&quot;for&quot;</span><span class="Special">)</span>
+      <span class="Special">(</span><span class="Identifier">not</span> <span class="Special">(</span>unevaluated? x<span class="Special">))</span>
+      <span class="Special">(</span>not-hint? x java.util.Map<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> element-compile-strategy
+  <span class="Constant">&quot;Returns the compilation strategy to use for a given element.&quot;</span>
+  <span class="Special">[[</span>tag attrs <span class="Special">&amp;</span> content <span class="Statement">:as</span> element<span class="Special">]]</span>
+  <span class="Special">(</span><span class="Statement">cond</span>
+    <span class="Special">(</span><span class="Identifier">every?</span> literal? element<span class="Special">)</span>
+      <span class="Statement">::all-literal</span>                    <span class="Comment">; e.g. [:span &quot;foo&quot;]</span>
+    <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span>literal? tag<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">map?</span> attrs<span class="Special">))</span>
+      <span class="Statement">::literal-tag-and-attributes</span>     <span class="Comment">; e.g. [:span {} x]</span>
+    <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span>literal? tag<span class="Special">)</span> <span class="Special">(</span>not-implicit-map? attrs<span class="Special">))</span>
+      <span class="Statement">::literal-tag-and-no-attributes</span>  <span class="Comment">; e.g. [:span ^String x]</span>
+    <span class="Special">(</span>literal? tag<span class="Special">)</span>
+      <span class="Statement">::literal-tag</span>                    <span class="Comment">; e.g. [:span x]</span>
+    <span class="Statement">:else</span>
+      <span class="Statement">::default</span><span class="Special">))</span>                      <span class="Comment">; e.g. [x]</span>
+
+<span class="Special">(</span><span class="PreProc">declare</span> compile-html<span class="Special">)</span>
+
+<span class="Special">(</span><span class="PreProc">defmulti</span> compile-element
+  <span class="Constant">&quot;Returns an unevaluated form that will render the supplied vector as a HTML</span>
+<span class="Constant">  element.&quot;</span>
+  <span class="Special">{</span><span class="Statement">:private</span> <span class="Constant">true</span><span class="Special">}</span>
+  element-compile-strategy<span class="Special">)</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-element <span class="Statement">::all-literal</span>
+  <span class="Special">[</span>element<span class="Special">]</span>
+  <span class="Special">(</span>render-element <span class="Special">(</span><span class="Identifier">eval</span> element<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-element <span class="Statement">::literal-tag-and-attributes</span>
+  <span class="Special">[[</span>tag attrs <span class="Special">&amp;</span> content<span class="Special">]]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[[</span>tag attrs _<span class="Special">]</span> <span class="Special">(</span>normalize-element <span class="Special">[</span>tag attrs<span class="Special">])]</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="PreProc">or</span> content <span class="Special">(</span>container-tags tag<span class="Special">))</span>
+      <span class="Special">`</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag<span class="Special">)</span> <span class="Special">~</span><span class="Special">(</span>compile-attr-map attrs<span class="Special">)</span> <span class="Constant">&quot;&gt;&quot;</span>
+            <span class="Special">~@</span><span class="Special">(</span>compile-html content<span class="Special">)</span>
+            <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;/&quot;</span> tag <span class="Constant">&quot;&gt;&quot;</span><span class="Special">))</span>
+      <span class="Special">`</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> <span class="Special">~</span>tag <span class="Special">~</span><span class="Special">(</span>compile-attr-map attrs<span class="Special">)</span> <span class="Special">~</span><span class="Special">(</span>end-tag<span class="Special">)))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-element <span class="Statement">::literal-tag-and-no-attributes</span>
+  <span class="Special">[[</span>tag <span class="Special">&amp;</span> content<span class="Special">]]</span>
+  <span class="Special">(</span>compile-element <span class="Special">(</span><span class="Identifier">apply</span> <span class="Identifier">vector</span> tag <span class="Special">{}</span> content<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-element <span class="Statement">::literal-tag</span>
+  <span class="Special">[[</span>tag attrs <span class="Special">&amp;</span> content<span class="Special">]]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[[</span>tag tag-attrs _<span class="Special">]</span> <span class="Special">(</span>normalize-element <span class="Special">[</span>tag<span class="Special">])</span>
+        attrs-sym         <span class="Special">(</span><span class="Identifier">gensym</span> <span class="Constant">&quot;attrs&quot;</span><span class="Special">)]</span>
+    <span class="Special">`</span><span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span><span class="Special">~</span>attrs-sym <span class="Special">~</span>attrs<span class="Special">]</span>
+       <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">map?</span> <span class="Special">~</span>attrs-sym<span class="Special">)</span>
+         <span class="Special">~</span><span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="PreProc">or</span> content <span class="Special">(</span>container-tags tag<span class="Special">))</span>
+            <span class="Special">`</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag<span class="Special">)</span>
+                  <span class="Special">(</span><span class="Special">#'</span>render-attr-map <span class="Special">(</span><span class="Identifier">merge</span> <span class="Special">~</span>tag-attrs <span class="Special">~</span>attrs-sym<span class="Special">))</span> <span class="Constant">&quot;&gt;&quot;</span>
+                  <span class="Special">~@</span><span class="Special">(</span>compile-html content<span class="Special">)</span>
+                  <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;/&quot;</span> tag <span class="Constant">&quot;&gt;&quot;</span><span class="Special">))</span>
+            <span class="Special">`</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag<span class="Special">)</span>
+                  <span class="Special">(</span><span class="Special">#'</span>render-attr-map <span class="Special">(</span><span class="Identifier">merge</span> <span class="Special">~</span>tag-attrs <span class="Special">~</span>attrs-sym<span class="Special">))</span>
+                  <span class="Special">~</span><span class="Special">(</span>end-tag<span class="Special">)))</span>
+         <span class="Special">~</span><span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="PreProc">or</span> attrs <span class="Special">(</span>container-tags tag<span class="Special">))</span>
+            <span class="Special">`</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag <span class="Special">(</span>render-attr-map tag-attrs<span class="Special">)</span> <span class="Constant">&quot;&gt;&quot;</span><span class="Special">)</span>
+                  <span class="Special">~@</span><span class="Special">(</span>compile-html <span class="Special">(</span><span class="Identifier">cons</span> attrs-sym content<span class="Special">))</span>
+                  <span class="Special">~</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;/&quot;</span> tag <span class="Constant">&quot;&gt;&quot;</span><span class="Special">))</span>
+            <span class="Special">(</span><span class="Identifier">str</span> <span class="Constant">&quot;&lt;&quot;</span> tag <span class="Special">(</span>render-attr-map tag-attrs<span class="Special">)</span> <span class="Special">(</span>end-tag<span class="Special">)))))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmethod</span> compile-element <span class="Statement">:default</span>
+  <span class="Special">[</span>element<span class="Special">]</span>
+  <span class="Special">`</span><span class="Special">(</span><span class="Special">#'</span>render-element
+     <span class="Special">[</span><span class="Special">~</span><span class="Special">(</span><span class="Identifier">first</span> element<span class="Special">)</span>
+      <span class="Special">~@</span><span class="Special">(</span><span class="Statement">for</span> <span class="Special">[</span>x <span class="Special">(</span><span class="Identifier">rest</span> element<span class="Special">)]</span>
+          <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">vector?</span> x<span class="Special">)</span>
+            <span class="Special">(</span>compile-element x<span class="Special">)</span>
+            x<span class="Special">))]))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> compile-html
+  <span class="Constant">&quot;Pre-compile data structures into HTML where possible.&quot;</span>
+  <span class="Special">[</span>content<span class="Special">]</span>
+  <span class="Special">(</span><span class="Statement">doall</span> <span class="Special">(</span><span class="Statement">for</span> <span class="Special">[</span>expr content<span class="Special">]</span>
+           <span class="Special">(</span><span class="Statement">cond</span>
+            <span class="Special">(</span><span class="Identifier">vector?</span> expr<span class="Special">)</span> <span class="Special">(</span>compile-element expr<span class="Special">)</span>
+            <span class="Special">(</span>literal? expr<span class="Special">)</span> expr
+            <span class="Special">(</span>hint? expr String<span class="Special">)</span> expr
+            <span class="Special">(</span>hint? expr Number<span class="Special">)</span> expr
+            <span class="Special">(</span><span class="Identifier">seq?</span> expr<span class="Special">)</span> <span class="Special">(</span>compile-form expr<span class="Special">)</span>
+            <span class="Statement">:else</span> <span class="Special">`</span><span class="Special">(</span><span class="Special">#'</span>render-html <span class="Special">~</span>expr<span class="Special">)))))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> collapse-strs
+  <span class="Constant">&quot;Collapse nested str expressions into one, where possible.&quot;</span>
+  <span class="Special">[</span>expr<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">seq?</span> expr<span class="Special">)</span>
+    <span class="Special">(</span><span class="Identifier">cons</span>
+     <span class="Special">(</span><span class="Identifier">first</span> expr<span class="Special">)</span>
+     <span class="Special">(</span><span class="Statement">mapcat</span>
+      <span class="Special">#(</span><span class="Special">if</span> <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span><span class="Identifier">seq?</span> %<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">symbol?</span> <span class="Special">(</span><span class="Identifier">first</span> %<span class="Special">))</span> <span class="Special">(</span><span class="Identifier">=</span> <span class="Special">(</span><span class="Identifier">first</span> %<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">first</span> expr<span class="Special">)</span> <span class="Special">`</span><span class="Identifier">str</span><span class="Special">))</span>
+         <span class="Special">(</span><span class="Identifier">rest</span> <span class="Special">(</span>collapse-strs %<span class="Special">))</span>
+         <span class="Special">(</span><span class="Identifier">list</span> <span class="Special">(</span>collapse-strs %<span class="Special">)))</span>
+      <span class="Special">(</span><span class="Identifier">rest</span> expr<span class="Special">)))</span>
+    expr<span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defmacro</span> html
+  <span class="Constant">&quot;Render Clojure data structures to a string of HTML.&quot;</span>
+  <span class="Special">[</span>options <span class="Special">&amp;</span> content<span class="Special">]</span>
+  <span class="Special">(</span><span class="PreProc">letfn</span> <span class="Special">[(</span>make-html <span class="Special">[</span>content<span class="Special">]</span>
+           <span class="Special">(</span>collapse-strs <span class="Special">`</span><span class="Special">(</span><span class="Identifier">str</span> <span class="Special">~@</span><span class="Special">(</span>compile-html content<span class="Special">))))]</span>
+    <span class="Special">(</span><span class="Statement">if-let</span> <span class="Special">[</span>mode <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span><span class="Identifier">map?</span> options<span class="Special">)</span> <span class="Special">(</span><span class="Statement">:mode</span> options<span class="Special">))]</span>
+      <span class="Special">(</span><span class="PreProc">binding</span> <span class="Special">[</span>*html-mode* mode<span class="Special">]</span>
+        <span class="Special">`</span><span class="Special">(</span><span class="PreProc">binding</span> <span class="Special">[</span>*html-mode* <span class="Special">~</span>mode<span class="Special">]</span>
+           <span class="Special">~</span><span class="Special">(</span>make-html content<span class="Special">)))</span>
+      <span class="Special">(</span>make-html <span class="Special">(</span><span class="Identifier">cons</span> options content<span class="Special">)))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmacro</span> defhtml
+  <span class="Constant">&quot;Define a function, but wrap its output in an implicit html macro.&quot;</span>
+  <span class="Special">[</span><span class="Identifier">name</span> <span class="Special">&amp;</span> fdecl<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[[</span>fhead fbody<span class="Special">]</span> <span class="Special">(</span><span class="Identifier">split-with</span> <span class="Special">#(</span><span class="Identifier">not</span> <span class="Special">(</span><span class="PreProc">or</span> <span class="Special">(</span><span class="Identifier">list?</span> %<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">vector?</span> %<span class="Special">)))</span> fdecl<span class="Special">)</span>
+        wrap-html <span class="Special">(</span><span class="Special">fn</span> <span class="Special">[[</span>args <span class="Special">&amp;</span> body<span class="Special">]]</span> <span class="Special">`</span><span class="Special">(</span><span class="Special">~</span>args <span class="Special">(</span>html <span class="Special">~@</span>body<span class="Special">)))]</span>
+    <span class="Special">`</span><span class="Special">(</span><span class="PreProc">defn</span> <span class="Special">~</span><span class="Identifier">name</span>
+       <span class="Special">~@</span>fhead
+       <span class="Special">~@</span><span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">vector?</span> <span class="Special">(</span><span class="Identifier">first</span> fbody<span class="Special">))</span>
+           <span class="Special">(</span>wrap-html fbody<span class="Special">)</span>
+           <span class="Special">(</span><span class="Statement">map</span> wrap-html fbody<span class="Special">)))))</span>
+
+<span class="Special">(</span><span class="PreProc">defn</span> add-optional-attrs
+  <span class="Constant">&quot;Add an optional attribute argument to a function that returns a vector tag.&quot;</span>
+  <span class="Special">[</span>func<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">fn</span> <span class="Special">[</span><span class="Special">&amp;</span> args<span class="Special">]</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">map?</span> <span class="Special">(</span><span class="Identifier">first</span> args<span class="Special">))</span>
+      <span class="Special">(</span><span class="Special">let</span> <span class="Special">[[</span>tag <span class="Special">&amp;</span> body<span class="Special">]</span> <span class="Special">(</span><span class="Identifier">apply</span> func <span class="Special">(</span><span class="Identifier">rest</span> args<span class="Special">))]</span>
+        <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">map?</span> <span class="Special">(</span><span class="Identifier">first</span> body<span class="Special">))</span>
+          <span class="Special">(</span><span class="Identifier">apply</span> <span class="Identifier">vector</span> tag <span class="Special">(</span><span class="Identifier">merge</span> <span class="Special">(</span><span class="Identifier">first</span> body<span class="Special">)</span> <span class="Special">(</span><span class="Identifier">first</span> args<span class="Special">))</span> <span class="Special">(</span><span class="Identifier">rest</span> body<span class="Special">))</span>
+          <span class="Special">(</span><span class="Identifier">apply</span> <span class="Identifier">vector</span> tag <span class="Special">(</span><span class="Identifier">first</span> args<span class="Special">)</span> body<span class="Special">)))</span>
+      <span class="Special">(</span><span class="Identifier">apply</span> func args<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="PreProc">defmacro</span> defelem
+  <span class="Constant">&quot;Defines a function that will return a tag vector. If the first argument</span>
+<span class="Constant">  passed to the resulting function is a map, it merges it with the attribute</span>
+<span class="Constant">  map of the returned tag value.&quot;</span>
+  <span class="Special">[</span><span class="Identifier">name</span> <span class="Special">&amp;</span> fdecl<span class="Special">]</span>
+  <span class="Special">`</span><span class="Special">(</span><span class="Special">do</span> <span class="Special">(</span><span class="PreProc">defn</span> <span class="Special">~</span><span class="Identifier">name</span> <span class="Special">~@</span>fdecl<span class="Special">)</span>
+       <span class="Special">(</span><span class="Identifier">alter-var-root</span> <span class="Special">(</span><span class="Special">var</span> <span class="Special">~</span><span class="Identifier">name</span><span class="Special">)</span> add-optional-attrs<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="Special">def</span> ^<span class="Statement">:dynamic</span> *base-url* <span class="Constant">nil</span><span class="Special">)</span>
+
+<span class="Special">(</span><span class="PreProc">defmacro</span> with-base-url
+  <span class="Constant">&quot;Add a base-url that will be added to the output of the resolve-uri function.&quot;</span>
+  <span class="Special">[</span>base-url <span class="Special">&amp;</span> body<span class="Special">]</span>
+  <span class="Special">`</span><span class="Special">(</span><span class="PreProc">binding</span> <span class="Special">[</span>*base-url* <span class="Special">~</span>base-url<span class="Special">]</span>
+     <span class="Special">~@</span>body<span class="Special">))</span>
+
+<span class="Special">(</span><span class="PreProc">defn</span> resolve-uri
+  <span class="Constant">&quot;Prepends the base-url to the supplied URI.&quot;</span>
+  <span class="Special">[</span>uri<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span>.isAbsolute <span class="Special">(</span>URI. uri<span class="Special">))</span>
+    uri
+    <span class="Special">(</span><span class="Identifier">str</span> *base-url* uri<span class="Special">)))</span>
+</pre>
+</body>
+</html>
