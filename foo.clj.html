@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~\Desktop\CljServlet.clj.html</title>
+<meta name="Generator" content="Vim/7.3">
+<meta name="plugin-version" content="vim7.3_v6">
+<meta name="syntax" content="clojure">
+<meta name="settings" content="use_css">
+<style type="text/css">
+<!--
+pre { font-family: consolas,monospace; color: #cccccc; background-color: #000000; }
+body { font-family: consolas,monospace; color: #cccccc; background-color: #000000; }
+.Comment { color: #80a0ff; }
+.Identifier { color: #40ffff; }
+.Constant { color: #ffa0a0; }
+.Statement { color: #ffff00; }
+.PreProc { color: #ff80ff; }
+.Special { color: #ffa500; }
+-->
+</style>
+</head>
+<body>
+<pre>
+<span class="Special">(</span><span class="PreProc">ns</span> ^<span class="Special">{</span><span class="Statement">:doc</span> <span class="Constant">&quot;</span>
+<span class="Constant">  可执行其他.clj文件函数的servlet，在web.xml中配置:</span>
+<span class="Constant">   1.app应用如esp.clj使用命名空间中的auth函数来进行权限控制，</span>
+<span class="Constant">     auth函数必须3个以上参数，第一个参数会传入request，第二个参数会传入fname（可选），第三个参数会传入ids；</span>
+<span class="Constant">     如果根本不想使用这些参数，可以直接带一个 &amp; args 避免调用出错，或者用1～2个参数，最后一个用 &amp; args</span>
+<span class="Constant">     返回true表示通过，继续输出页面；返回 false 等则表示验证没有通过，跳转到/login.html;</span>
+<span class="Constant">   2.类似Play!，自动绑定querystring中的值和app/*.clj函数中的同名参数，例如 clj1/foo/01/012?name=james&amp;age=30 对应函数为</span>
+<span class="Constant">     (defn foo [name age] ...) </span>
+<span class="Constant">       -- foo函数自动获取到name=james, age=30这两个值；也可以有3个自动绑定的名称(id ids request)：</span>
+<span class="Constant">     (defn foo [id ids request name age] ...) </span>
+<span class="Constant">       -- foo函数自动获取到 id=01, ids='(01 012), request=request, name=james, age=30 &quot;</span><span class="Special">}</span>
+  foo.CljServlet
+  <span class="Special">(</span><span class="Statement">:gen-class</span>
+    <span class="Statement">:extends</span> javax.servlet.http.HttpServlet<span class="Special">))</span>
+
+<span class="Special">(</span><span class="Identifier">import</span> java.io.PrintWriter<span class="Special">)</span>
+<span class="Special">(</span><span class="Identifier">import</span> wr3.BaseConfig<span class="Special">)</span>
+<span class="Special">(</span><span class="Identifier">use</span> <span class="Special">'</span><span class="Special">[</span>foo.u <span class="Statement">:only</span> <span class="Special">(</span>fcall require+ fget fargs fargc ? app-timestamp<span class="Special">)])</span>
+
+<span class="Comment">;; 缺省的 namespace 及函数名, &quot;foo.app.controller/index&quot;</span>
+<span class="Special">(</span><span class="Special">def</span> ns0 <span class="Constant">&quot;foo.app.&quot;</span><span class="Special">)</span>
+<span class="Special">(</span><span class="Special">def</span> ns1 <span class="Constant">&quot;controller&quot;</span><span class="Special">)</span>
+<span class="Special">(</span><span class="Special">def</span> fn0 <span class="Constant">&quot;index&quot;</span><span class="Special">)</span>
+
+<span class="Comment">;; 如果 namespace 没有包名前缀，添加 ns0。如 controller1 -&gt; foo.app.controller1</span>
+<span class="Comment">;; 如果 namespace 为-则用缺省ns。如 &quot;-&quot; -&gt; foo.app.controller </span>
+<span class="Special">(</span><span class="PreProc">defn-</span> add-ns-prefix
+  <span class="Special">[</span><span class="PreProc">ns</span><span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">=</span> <span class="PreProc">ns</span> <span class="Constant">&quot;-&quot;</span><span class="Special">)</span> <span class="Special">(</span><span class="Identifier">str</span> ns0 ns1<span class="Special">)</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">==</span> <span class="Special">(</span>.indexOf <span class="PreProc">ns</span> <span class="Constant">&quot;.&quot;</span><span class="Special">)</span> <span class="Constant">-1</span><span class="Special">)</span> <span class="Special">(</span><span class="Identifier">str</span> ns0 <span class="PreProc">ns</span><span class="Special">)</span> <span class="PreProc">ns</span><span class="Special">)))</span>
+
+<span class="Comment">;; 从path-info中得到namespace和函数名的Map形如:</span>
+<span class="Comment">;;   {:ns ns1 :fn fn1},</span>
+<span class="Comment">;; 或者还带id形如：</span>
+<span class="Comment">;;   {:ns &quot;foo.app.controller&quot; :fn &quot;index :id '(1003 104)}, </span>
+<span class="Comment">;;   其中id 是nil或者一个list</span>
+<span class="Comment">;; 例子:</span>
+<span class="Comment">;;   &quot;/foo.app.c1/action2&quot; -&gt; {:ns &quot;foo.app.c1&quot; :fn &quot;action2&quot;}</span>
+<span class="Comment">;;   &quot;/foo.app.c1&quot;         -&gt; {:ns &quot;foo.app.c1&quot; :fn &quot;index&quot;}</span>
+<span class="Comment">;;   &quot;&quot;                        -&gt; {:ns &quot;foo.app.controller&quot; :fn &quot;index&quot;} </span>
+<span class="Comment">;;   &quot;/c2/m2/1003&quot;             -&gt; {:ns &quot;foo.app.c2&quot; :fn &quot;m2&quot; :id '(1003)}</span>
+<span class="Special">(</span><span class="PreProc">defn-</span> get-ns-fn-id
+  <span class="Constant">&quot;path-info: url路径字符串;</span>
+<span class="Constant">  返回一个map含：ns: namespace字符串，fn: funcname字符串，id: 含所有id的map&quot;</span>
+  <span class="Special">[</span>path-info<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>ss <span class="Special">(</span><span class="Identifier">seq</span> <span class="Special">(</span>.split <span class="Special">(</span><span class="Identifier">str</span> path-info<span class="Special">)</span> <span class="Constant">&quot;/&quot;</span><span class="Special">))</span>
+        n <span class="Special">(</span><span class="Identifier">count</span> ss<span class="Special">)]</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">&lt;=</span> n <span class="Constant">1</span><span class="Special">)</span> <span class="Special">{</span><span class="Statement">:ns</span> <span class="Special">(</span><span class="Identifier">str</span> ns0 ns1<span class="Special">)</span> <span class="Statement">:fn</span> fn0<span class="Special">}</span> <span class="Comment">; (&quot;&quot;)</span>
+      <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>s1 <span class="Special">(</span>add-ns-prefix <span class="Special">(</span><span class="Identifier">second</span> ss<span class="Special">))]</span>
+        <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">==</span> n <span class="Constant">2</span><span class="Special">)</span> <span class="Special">{</span><span class="Statement">:ns</span> s1 <span class="Statement">:fn</span> fn0<span class="Special">}</span>        <span class="Comment">; (&quot;&quot; &quot;controller1&quot;)</span>
+          <span class="Special">{</span><span class="Statement">:ns</span> s1 <span class="Statement">:fn</span> <span class="Special">(</span><span class="Identifier">nth</span> ss <span class="Constant">2</span><span class="Special">)</span> <span class="Statement">:id</span> <span class="Special">(</span><span class="Identifier">next</span> <span class="Special">(</span><span class="Identifier">nnext</span> ss<span class="Special">))}</span> <span class="Special">)))))</span>      <span class="Comment">; (&quot;&quot; &quot;-&quot; &quot;action2&quot; &quot;id1&quot; &quot;1003&quot;)</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> request-to-map
+  <span class="Constant">&quot;获得request的queryString中的key-value，以Map形式返回&quot;</span>
+  <span class="Special">[</span>request<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">nil?</span> request<span class="Special">)</span> <span class="Special">{}</span>
+    <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>m <span class="Special">(</span>.getParameterMap request<span class="Special">)]</span>
+      <span class="Special">(</span><span class="Identifier">zipmap</span> <span class="Special">(</span><span class="Identifier">keys</span> m<span class="Special">)</span> <span class="Special">(</span><span class="Statement">map</span> <span class="Special">#(</span><span class="Identifier">apply</span> <span class="Identifier">str</span> <span class="Special">(</span><span class="Identifier">interpose</span> <span class="Constant">&quot;&amp;&quot;</span> %<span class="Special">))</span> <span class="Special">(</span><span class="Identifier">vals</span> m<span class="Special">))))))</span> <span class="Comment">; ?k1=a&amp;k1=b 变为{&quot;k1&quot; &quot;a&amp;b&quot;}</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> make-binding-params
+  <span class="Constant">&quot;让app可以自行binding如下变量：</span>
+<span class="Constant">  id：第一个id值；</span>
+<span class="Constant">  ids：所有id值的list；</span>
+<span class="Constant">  request：request对象；</span>
+<span class="Constant">  querystring中各值：在app/*.clj中函数定义的其他参数名字都可以自动绑定&quot;</span>
+  <span class="Special">[</span>request ids<span class="Special">]</span>
+  <span class="Special">(</span><span class="Identifier">merge</span> <span class="Special">{</span><span class="Constant">&quot;id&quot;</span> <span class="Special">(</span><span class="Identifier">first</span> ids<span class="Special">)</span> <span class="Constant">&quot;ids&quot;</span> ids <span class="Constant">&quot;request&quot;</span> request<span class="Special">}</span> <span class="Special">(</span>request-to-map request<span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> fcall-binding-params
+  <span class="Constant">&quot;把params自动绑定到同名的fname函数参数中， 例如：(binding-params 'fp3' {:p1 10 :pa 20 :pb 30 :g +})&quot;</span>
+  <span class="Special">[</span><span class="PreProc">ns</span> fname params<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>arg-names <span class="Special">(</span>fargs <span class="PreProc">ns</span> fname<span class="Special">)</span>
+        arg-values <span class="Special">(</span><span class="Statement">map</span> <span class="Special">#(</span>params <span class="Special">(</span><span class="Identifier">name</span> %<span class="Special">))</span> arg-names<span class="Special">)]</span>
+    <span class="Special">(</span><span class="Identifier">apply</span> <span class="Special">(</span>fget <span class="PreProc">ns</span> fname<span class="Special">)</span> arg-values<span class="Special">)))</span>
+
+<span class="Comment">;;;---------------- 以下为 HttpServlet 方法</span>
+<span class="Special">(</span><span class="PreProc">defn</span> -init
+  <span class="Constant">&quot;一次初始化&quot;</span>
+  <span class="Special">[</span><span class="Identifier">this</span> super<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>context <span class="Special">(</span>.getServletContext super<span class="Special">)</span>
+        wr3home <span class="Special">(</span>.getRealPath context <span class="Constant">&quot;&quot;</span><span class="Special">)</span>
+        webapp <span class="Special">(</span>.getContextPath context<span class="Special">)]</span>
+    <span class="Comment">; 不依赖AppFilter.init()，通过自行实现来设置contextPath，之后web app要用到webapp</span>
+    <span class="Special">(</span><span class="Statement">when</span> <span class="Special">(</span><span class="Identifier">nil?</span> <span class="Special">(</span>System/getProperty BaseConfig/WR3HOME<span class="Special">))</span>
+      <span class="Special">(</span>System/setProperty BaseConfig/WR3HOME wr3home<span class="Special">))</span>
+    <span class="Special">(</span><span class="Statement">when</span> <span class="Special">(</span><span class="Identifier">nil?</span> <span class="Special">(</span>BaseConfig/webapp<span class="Special">))</span>
+      <span class="Special">(</span>BaseConfig/set BaseConfig/CONTEXT_PATH webapp<span class="Special">))</span>
+    <span class="Special">(</span><span class="Identifier">println</span> <span class="Special">(</span><span class="Identifier">format</span> <span class="Constant">&quot;--- CljServlet init: [%s/c/] ---&quot;</span> webapp<span class="Special">))))</span>
+
+<span class="Special">(</span><span class="Identifier">import</span> wr3.util.Stringx<span class="Special">)</span>
+
+<span class="Special">(</span><span class="Special">def</span> not-reload <span class="Special">(</span><span class="Identifier">=</span> <span class="Constant">&quot;0&quot;</span> <span class="Special">(</span>System/getProperty <span class="Constant">&quot;foo.reload&quot;</span><span class="Special">)))</span>
+
+<span class="Special">(</span><span class="PreProc">defn-</span> need-reload?
+  <span class="Constant">&quot;jvm的设置-Dfoo.reload=0优先，设为0则始终不reload；不设为0或者没有设置时：</span>
+<span class="Constant">  context中没有记录过时间         ， 不需要reload，返回false，并setAttribute；</span>
+<span class="Constant">  context中已经有时间并且和最新符合，不需要reload，返回false；</span>
+<span class="Constant">  context中已经有时间并且和最新不符，  需要reload，返回true， 并setAttribute&quot;</span>
+  <span class="Special">[</span>context <span class="PreProc">ns</span><span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">if</span> not-reload <span class="Constant">false</span>
+    <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>t1 <span class="Special">(</span>.getAttribute context <span class="PreProc">ns</span><span class="Special">)</span>
+          t2 <span class="Special">(</span>app-timestamp <span class="PreProc">ns</span><span class="Special">)</span> <span class="Special">]</span>
+      <span class="Special">(</span><span class="Statement">cond</span>
+        <span class="Special">(</span><span class="Identifier">nil?</span> t1<span class="Special">)</span> <span class="Special">(</span><span class="Special">do</span> <span class="Special">(</span>.setAttribute context <span class="PreProc">ns</span> t2<span class="Special">)</span> <span class="Constant">false</span><span class="Special">)</span>
+        <span class="Special">(</span><span class="Identifier">=</span> t1 t2<span class="Special">)</span> <span class="Constant">false</span>
+        <span class="Statement">:else</span> <span class="Special">(</span><span class="Special">do</span> <span class="Special">(</span>.setAttribute context <span class="PreProc">ns</span> t2<span class="Special">)</span> <span class="Constant">true</span><span class="Special">)))))</span>
+
+<span class="Comment">;; 处理形如 <a href="http://server:8080/foo/foo.controller1/action2?k1=v1">http://server:8080/foo/foo.controller1/action2?k1=v1</a> 的url</span>
+<span class="Special">(</span><span class="PreProc">defn</span> -doGet
+  <span class="Special">[</span><span class="Identifier">this</span> request response<span class="Special">]</span>
+  <span class="Special">(</span><span class="Special">let</span> <span class="Special">[</span>context <span class="Special">(</span>.getServletContext request<span class="Special">)</span> <span class="Comment">; setAttribute(str, str), getAttribute(str)</span>
+        <span class="Comment">; 获取content-type和charset</span>
+        params <span class="Special">(</span>.getParameterMap request<span class="Special">)</span>
+        content-type <span class="Special">(</span>Stringx/s <span class="Special">(</span>Stringx/join <span class="Special">(</span><span class="Identifier">get</span> params <span class="Constant">&quot;content-type&quot;</span><span class="Special">)</span> <span class="Constant">&quot;&amp;&quot;</span><span class="Special">)</span> <span class="Constant">&quot;text/html&quot;</span><span class="Special">)</span>
+        charset <span class="Special">(</span>Stringx/s <span class="Special">(</span>Stringx/join <span class="Special">(</span><span class="Identifier">get</span> params <span class="Constant">&quot;charset&quot;</span><span class="Special">)</span> <span class="Constant">&quot;&amp;&quot;</span><span class="Special">)</span> <span class="Constant">&quot;utf-8&quot;</span><span class="Special">)</span>
+        <span class="Comment">; 执行函数</span>
+        path-info <span class="Special">(</span>.getPathInfo request<span class="Special">)</span> <span class="Comment">; 可能为 nil &quot;/&quot; &quot;/foo.c1/a2/&quot; 等</span>
+        ns-fn-id  <span class="Special">(</span>get-ns-fn-id path-info<span class="Special">)</span>
+        <span class="PreProc">ns</span> <span class="Special">(</span><span class="Statement">:ns</span> ns-fn-id<span class="Special">)</span>
+        <span class="Special">fn</span> <span class="Special">(</span><span class="Statement">:fn</span> ns-fn-id<span class="Special">)</span>
+        ids <span class="Special">(</span><span class="Statement">:id</span> ns-fn-id<span class="Special">)</span>
+        <span class="Comment">; 判断能否有权限执行本函数fn，无auth函数视为有权限</span>
+        need-reload <span class="Special">(</span>require+ <span class="PreProc">ns</span> <span class="Special">(</span>need-reload? context <span class="PreProc">ns</span><span class="Special">))</span>
+        auth <span class="Special">(</span><span class="Statement">if-let</span> <span class="Special">[</span>f <span class="Special">(</span><span class="PreProc">and</span> <span class="Special">(</span><span class="Identifier">not=</span> <span class="Special">fn</span> <span class="Constant">&quot;auth&quot;</span><span class="Special">)</span> <span class="Special">(</span>fget <span class="PreProc">ns</span> <span class="Constant">&quot;auth&quot;</span><span class="Special">))]</span>
+               <span class="Special">(</span>f request <span class="Special">fn</span> ids<span class="Special">)</span>
+               <span class="Constant">true</span><span class="Special">)</span>
+        rt <span class="Special">(</span><span class="Statement">when</span> <span class="Special">(</span><span class="Identifier">true?</span> auth<span class="Special">)</span>
+             <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">zero?</span> <span class="Special">(</span>fargc <span class="PreProc">ns</span> <span class="Special">fn</span><span class="Special">))</span>
+               <span class="Special">(</span>fcall <span class="PreProc">ns</span> <span class="Special">fn</span><span class="Special">)</span>
+               <span class="Comment">; (fcall ns fn {:request request :id id})</span>
+               <span class="Special">(</span>fcall-binding-params <span class="PreProc">ns</span> <span class="Special">fn</span> <span class="Special">(</span>make-binding-params request ids<span class="Special">))))</span>
+        <span class="Special">]</span>
+    <span class="Special">(</span>.setContentType response <span class="Special">(</span><span class="Identifier">format</span> <span class="Constant">&quot;%s; charset=%s&quot;</span> content-type charset<span class="Special">))</span>
+    <span class="Special">(</span><span class="Special">if</span> <span class="Special">(</span><span class="Identifier">true?</span> auth<span class="Special">)</span>
+      <span class="Special">(</span><span class="PreProc">-&gt;</span> response .getWriter
+        <span class="Special">(</span>.println <span class="Special">(</span>? rt <span class="Constant">&quot;fcall return nil&quot;</span><span class="Special">)))</span>
+      <span class="Special">(</span><span class="Special">do</span>
+        <span class="Special">(</span><span class="PreProc">-&gt;</span> request .getSession
+          <span class="Special">(</span>.setAttribute <span class="Constant">&quot;wr3url&quot;</span> <span class="Special">(</span><span class="Identifier">format</span> <span class="Constant">&quot;%s/c%s&quot;</span> <span class="Special">(</span>BaseConfig/webapp<span class="Special">)</span> path-info<span class="Special">)))</span>
+        <span class="Special">(</span>.sendRedirect response <span class="Constant">&quot;/login.html&quot;</span><span class="Special">)))))</span>
+
+<span class="Comment">;; 下面的方法写不写皆可</span>
+<span class="Special">(</span><span class="PreProc">defn</span> -doPost
+  <span class="Special">[</span><span class="Identifier">this</span> request response<span class="Special">]</span>
+  <span class="Special">(</span>-doGet <span class="Identifier">this</span> request response<span class="Special">))</span>
+</pre>
+</body>
+</html>
