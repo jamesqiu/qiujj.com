@@ -1,0 +1,2761 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 14 (filtered)">
+<title>Julia Handbook (by jamesqiu)</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:黑体;
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+@font-face
+	{font-family:Cambria;
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+@font-face
+	{font-family:微软雅黑;
+	panose-1:2 11 5 3 2 2 4 2 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@微软雅黑";
+	panose-1:2 11 5 3 2 2 4 2 2 4;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@黑体";
+	panose-1:2 1 6 9 6 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";}
+h1
+	{margin-top:17.0pt;
+	margin-right:0cm;
+	margin-bottom:16.5pt;
+	margin-left:21.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-21.6pt;
+	line-height:240%;
+	page-break-after:avoid;
+	font-size:22.0pt;
+	font-family:"Times New Roman","serif";
+	font-weight:bold;}
+h2
+	{margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:28.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-28.8pt;
+	line-height:173%;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;}
+h3
+	{margin-top:13.0pt;
+	margin-right:0cm;
+	margin-bottom:13.0pt;
+	margin-left:36.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-36.0pt;
+	line-height:173%;
+	page-break-after:avoid;
+	font-size:16.0pt;
+	font-family:"Times New Roman","serif";
+	font-weight:bold;}
+h4
+	{margin-top:14.0pt;
+	margin-right:0cm;
+	margin-bottom:14.5pt;
+	margin-left:43.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-43.2pt;
+	line-height:156%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;}
+h5
+	{margin-top:14.0pt;
+	margin-right:0cm;
+	margin-bottom:14.5pt;
+	margin-left:50.4pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-50.4pt;
+	line-height:156%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Times New Roman","serif";
+	font-weight:bold;}
+h6
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.2pt;
+	margin-left:57.6pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-57.6pt;
+	line-height:133%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";
+	font-weight:bold;}
+p.MsoHeading7, li.MsoHeading7, div.MsoHeading7
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.2pt;
+	margin-left:64.8pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-64.8pt;
+	line-height:133%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Times New Roman","serif";
+	font-weight:bold;}
+p.MsoHeading8, li.MsoHeading8, div.MsoHeading8
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.2pt;
+	margin-left:72.0pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-72.0pt;
+	line-height:133%;
+	page-break-after:avoid;
+	font-size:12.0pt;
+	font-family:"Arial","sans-serif";}
+p.MsoHeading9, li.MsoHeading9, div.MsoHeading9
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:3.2pt;
+	margin-left:79.2pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:-79.2pt;
+	line-height:133%;
+	page-break-after:avoid;
+	font-size:10.5pt;
+	font-family:"Arial","sans-serif";}
+p.MsoToc1, li.MsoToc1, div.MsoToc1
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";}
+p.MsoToc2, li.MsoToc2, div.MsoToc2
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:21.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";}
+p.MsoToc3, li.MsoToc3, div.MsoToc3
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:42.0pt;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";}
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";}
+p.MsoToaHeading, li.MsoToaHeading, div.MsoToaHeading
+	{margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:12.0pt;
+	font-family:"Cambria","serif";}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Times New Roman","serif";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	background:navy;
+	font-size:9.0pt;
+	font-family:"Tahoma","sans-serif";}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:宋体;}
+code
+	{font-family:"Verdana","sans-serif";}
+pre
+	{mso-style-link:"HTML 预设格式 Char";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:宋体;}
+p.MsoCommentSubject, li.MsoCommentSubject, div.MsoCommentSubject
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:10.5pt;
+	font-family:"Times New Roman","serif";
+	font-weight:bold;}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:9.0pt;
+	font-family:"Times New Roman","serif";}
+span.classbgselect1
+	{mso-style-name:class_bg_select1;
+	background:#FFFF66;}
+span.classbgnone1
+	{mso-style-name:class_bg_none1;
+	background:white;}
+p.style1, li.style1, div.style1
+	{mso-style-name:style1;
+	margin-right:0cm;
+	margin-left:0cm;
+	font-size:13.0pt;
+	font-family:"Verdana","sans-serif";}
+p.style2, li.style2, div.style2
+	{mso-style-name:style2;
+	margin-right:0cm;
+	margin-left:0cm;
+	font-size:13.0pt;
+	font-family:"Verdana","sans-serif";}
+span.a14c
+	{mso-style-name:a14c;}
+span.font14
+	{mso-style-name:font14;}
+span.boldcode
+	{mso-style-name:boldcode;}
+span.oblogtext
+	{mso-style-name:oblog_text;}
+span.docemphstrong
+	{mso-style-name:docemphstrong;}
+span.javascript
+	{mso-style-name:javascript;}
+span.HTMLChar
+	{mso-style-name:"HTML 预设格式 Char";
+	mso-style-link:"HTML 预设格式";
+	font-family:宋体;}
+span.apple-converted-space
+	{mso-style-name:apple-converted-space;}
+ /* Page Definitions */
+ @page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 64.3pt 72.0pt 72.0pt;
+	layout-grid:15.6pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=ZH-CN link=blue vlink=purple style='text-justify-trim:punctuation; margin:30px'>
+
+<div class=WordSection1 style='layout-grid:15.6pt'>
+
+<p class=MsoNormal align=center style='margin-left:54.2pt;text-align:center;
+text-indent:-54.2pt'><b><span style='font-size:12.0pt;font-family:宋体;
+color:#FF6600;background:yellow'>版权信息</span></b></p>
+
+<p class=MsoNormal align=left style='margin-left:.05pt;text-align:left;
+text-indent:27.0pt'><span style='font-size:12.0pt;font-family:宋体;background:
+yellow'>本材料版权为</span><span lang=EN-US style='font-size:12.0pt;font-family:Consolas;
+background:yellow'>JamesQiu</span><span style='font-size:12.0pt;font-family:
+宋体;background:yellow'>所有，请保留此信息。</span></p>
+
+<p class=MsoNormal align=right style='text-align:right'><b><u><span
+style='font-size:12.0pt;font-family:宋体;color:red'>文档版本：</span></u></b><b><u><span
+lang=EN-US style='font-size:12.0pt;font-family:Consolas;color:red'>2012-10-8</span></u></b></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><u><span
+style='font-size:12.0pt;font-family:宋体'>目</span></u></b><b><u><span
+style='font-size:12.0pt;font-family:Consolas'> </span></u></b><b><u><span
+style='font-size:12.0pt;font-family:宋体'>录</span></u></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoToc1><span
+class=MsoHyperlink><span lang=EN-US><a href="#_Toc337474044"><span
+style='font-family:"微软雅黑","sans-serif"'>1</span><span lang=EN-US
+style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>、</span></span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>           </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>安装使用</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474045"><span style='font-family:"微软雅黑","sans-serif"'>1.1</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>Windows</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>2</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474046"><span style='font-family:"微软雅黑","sans-serif"'>1.2</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>Linux</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474047"><span style='font-family:"微软雅黑","sans-serif"'>1.3</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>帮助文档</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474048"><span style='font-family:"微软雅黑","sans-serif"'>2</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>、</span></span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>           </span><span style='font-family:"微软雅黑","sans-serif"'>Lang</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474049"><span style='font-family:"微软雅黑","sans-serif"'>2.1</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>文件编码</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474050"><span style='font-family:"微软雅黑","sans-serif"'>2.2</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>repl</span><span
+style='color:windowtext;display:none;text-decoration:none'> </span><span
+style='color:windowtext;display:none;text-decoration:none'>3</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474051"><span style='font-family:"微软雅黑","sans-serif"'>2.3</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>print </span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>输出</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474052"><span style='font-family:"微软雅黑","sans-serif"'>2.4</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>变量定义</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474053"><span style='font-family:"微软雅黑","sans-serif"'>2.5</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>变量类型</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>4</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474054"><span style='font-family:Consolas'>2.6</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>      </span><span style='font-family:Consolas'>number</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>数字</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>5</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474055"><span style='font-family:"微软雅黑","sans-serif"'>2.7</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>string </span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>字符串</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>6</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474056"><span style='font-family:"微软雅黑","sans-serif"'>2.8</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>类型转换</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474057"><span style='font-family:"微软雅黑","sans-serif"'>2.9</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>if-elseif-else</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474058"><span style='font-family:"微软雅黑","sans-serif"'>2.10</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span style='font-family:"微软雅黑","sans-serif"'>while</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>和for</span></span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>循环</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>7</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474059"><span style='font-family:"微软雅黑","sans-serif"'>2.11</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>数组</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>8</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474060"><span style='font-family:"微软雅黑","sans-serif"'>2.12</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span style='font-family:"微软雅黑","sans-serif"'>try-catch</span><span
+style='color:windowtext;display:none;text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>9</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474061"><span style='font-family:"微软雅黑","sans-serif"'>2.13</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>运行系统命令</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>9</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474062"><span style='font-family:"微软雅黑","sans-serif"'>2.14</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>算术表达式的函数表示</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>9</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474063"><span style='font-family:"微软雅黑","sans-serif"'>2.15</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span style='font-family:"微软雅黑","sans-serif"'>macro</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>宏</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>9</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474064"><span style='font-family:"微软雅黑","sans-serif"'>2.16</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>调用C</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>10</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474065"><span style='font-family:"微软雅黑","sans-serif"'>2.17</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>调用Python</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>. </span><span
+style='color:windowtext;display:none;text-decoration:none'>10</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474066"><span style='font-family:"微软雅黑","sans-serif"'>2.18</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>          </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>其他</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474067"><span style='font-family:"微软雅黑","sans-serif"'>3</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>、</span></span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>           </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>函数</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474068"><span style='font-family:"微软雅黑","sans-serif"'>3.1</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>命名及定义</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474069"><span style='font-family:"微软雅黑","sans-serif"'>3.2</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>变长参数</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>11</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474070"><span style='font-family:"微软雅黑","sans-serif"'>3.3</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>多返回值</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474071"><span style='font-family:"微软雅黑","sans-serif"'>3.4</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>匿名函数</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474072"><span style='font-family:"微软雅黑","sans-serif"'>3.5</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span style='font-family:"微软雅黑","sans-serif"'>do</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>块函数</span></span><span
+style='color:windowtext;display:none;text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>12</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474073"><span style='font-family:"微软雅黑","sans-serif"'>4</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>、</span></span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>           </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>并行计算</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474074"><span style='font-family:"微软雅黑","sans-serif"'>4.1</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>命令行启动设置</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474075"><span style='font-family:"微软雅黑","sans-serif"'>4.2</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>多进程</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>13</span></a></span></span></p>
+
+<p class=MsoToc1><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474076"><span style='font-family:"微软雅黑","sans-serif"'>5</span><span
+lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span lang=EN-US>、</span></span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>           </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>附录</span></span><span style='color:windowtext;display:none;
+text-decoration:none'>... </span><span
+style='color:windowtext;display:none;text-decoration:none'>14</span></a></span></span></p>
+
+<p class=MsoToc2><span class=MsoHyperlink><span lang=EN-US><a
+href="#_Toc337474077"><span style='font-family:"微软雅黑","sans-serif"'>5.1</span><span
+style='font-family:"Calibri","sans-serif";color:windowtext;text-decoration:
+none'>        </span><span lang=EN-US style='font-family:"微软雅黑","sans-serif"'><span
+lang=EN-US>程序实例——Project Euler</span></span><span style='color:windowtext;
+display:none;text-decoration:none'> </span><span
+style='color:windowtext;display:none;text-decoration:none'>14</span></a></span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span
+style='font-size:12.0pt;font-family:宋体'>前言</span></b></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span style='font-size:12.0pt;
+font-family:宋体'>代码之外的话，越少越好。</span></p>
+
+<p class=MsoNormal align=right style='text-align:right;word-break:break-all'><span
+lang=EN-US style='font-size:12.0pt;font-family:Consolas'>jamesqiu </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:12.0pt;font-family:Consolas'>&nbsp;</span></p>
+
+<h1><a name="_Toc337474044"><span lang=EN-US style='font-size:16.0pt;
+line-height:240%;font-family:"微软雅黑","sans-serif"'>1、<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:16.0pt;line-height:240%;font-family:"微软雅黑","sans-serif"'>安装使用</span></a></h1>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474045"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>1.1<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>Windows</span></a></h2>
+
+<p class=MsoNormal><span class=MsoHyperlink><span lang=EN-US style='font-family:
+Consolas'><a href="http://julialang.org/">http://julialang.org/</a></span></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>网站下载解压即可使用</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>julia</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>可写了个</span><span lang=EN-US
+style='font-family:Consolas'>alias</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>jl</span><span lang=EN-US
+style='font-family:Consolas'> test1.jl</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>自带</span><span lang=EN-US
+style='font-family:Consolas'>web</span><span style='font-family:宋体'>服务器（可通过</span><span
+lang=EN-US style='font-family:Consolas'>D3</span><span style='font-family:宋体'>进行</span><span
+lang=EN-US style='font-family:Consolas'>plot</span><span style='font-family:
+宋体'>绘图）和</span><span lang=EN-US style='font-family:Consolas'>vim</span><span
+style='font-family:宋体'>的</span><span lang=EN-US style='font-family:Consolas'>plugin</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474046"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>1.2<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>Linux</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>从源码编译。需要</span><span
+lang=EN-US style='font-family:Consolas'>clang</span><span style='font-family:
+宋体'>和</span><span lang=EN-US style='font-family:Consolas'>gfortran</span><span
+style='font-family:宋体'>，需要</span><span lang=EN-US style='font-family:Consolas'>libncurses-dev</span><span
+style='font-family:宋体'>（</span><span lang=EN-US style='font-family:Consolas'>debian</span><span
+style='font-family:宋体'>可能需要降级已安装的</span><span lang=EN-US style='font-family:
+Consolas'>ncurses</span><span style='font-family:宋体'>），编译后可以把数百</span><span
+lang=EN-US style='font-family:Consolas'>M</span><span style='font-family:宋体'>的</span><span
+lang=EN-US style='font-family:Consolas'>deps</span><span style='font-family:
+宋体'>目录删除。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474047"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>1.3<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>帮助文档</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>repl</span><span
+style='font-family:宋体'>支持</span><span lang=EN-US style='font-family:Consolas'>tab</span><span
+style='font-family:宋体'>自动补全和</span><span lang=EN-US style='font-family:Consolas'>help()</span><span
+style='font-family:宋体'>函数</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>在线文档</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'><a
+href="http://docs.julialang.org/en/latest/">http://docs.julialang.org/en/latest/</a></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>离线文档下载：</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'><a
+href="https://readthedocs.org/projects/julia/downloads/">https://readthedocs.org/projects/julia/downloads/</a></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>本地：</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'><a
+href="file:///D:\doc_\Misc_\Julia\__julia%20官方文档（2012-9-26）.pdf">D:\doc_\Misc_\Julia\__julia
+<span lang=EN-US style='font-family:宋体'><span lang=EN-US>官方文档<span lang=EN-US>（</span></span></span>2012-9-26<span
+lang=EN-US style='font-family:宋体'><span lang=EN-US>）</span></span>.pdf</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h1><a name="_Toc337474048"><span lang=EN-US style='font-size:16.0pt;
+line-height:240%;font-family:"微软雅黑","sans-serif"'>2、<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:16.0pt;line-height:240%;
+font-family:"微软雅黑","sans-serif"'>Lang</span></a></h1>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474049"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.1<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>文件编码</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>统一设置成</span><span lang=EN-US
+style='font-family:Consolas'>utf-8</span><span style='font-family:宋体'>。输出终端的中文是能直接正常显示的。</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474050"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.2<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>repl</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>julia</span><span
+style='font-family:宋体'>开发高度依赖</span><span lang=EN-US style='font-family:Consolas'>repl</span><span
+style='font-family:宋体'>，自带</span><span lang=EN-US style='font-family:Consolas'>repl</span><span
+style='font-family:宋体'>做得也很好</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span style='font-family:宋体'>支持</span><span lang=EN-US
+style='font-family:Consolas'>tab</span><span style='font-family:宋体'>自动完成</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span lang=EN-US style='font-family:Consolas;background:yellow'>load</span><span
+lang=EN-US style='font-family:Consolas'>(&quot;foo.jl&quot;)</span><span
+style='font-family:宋体'>转载脚本</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span lang=EN-US style='font-family:Consolas;background:yellow'>ans</span><span
+style='font-family:宋体'>代表最后一个运算结果</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span style='font-family:宋体'>注释用</span><span style='font-family:
+Consolas'> <span lang=EN-US style='background:yellow'>#</span><span lang=EN-US>
+</span></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span style='font-family:宋体'>命令行参数用内部变量</span><span lang=EN-US
+style='font-family:Consolas'>ARGS</span><span style='font-family:宋体'>表示</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>for i in <span style='background:yellow'>ARGS</span>;
+println(i); end</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:-21.0pt'><span
+lang=EN-US style='font-family:Wingdings'>l<span style='font:7.0pt "Times New Roman"'>&nbsp;
+</span></span><span style='font-family:宋体'>执行时间可用系统宏</span><span
+style='font-family:Consolas'> <span lang=EN-US>@elapsed</span></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>fib(n) = n &lt; 2 ? n : fib(n - 1) + fib(n - 2)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>@elapsed</span><span lang=EN-US
+style='font-family:Consolas'> fib(25)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474051"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.3<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>print </span></a><span style='font-size:15.0pt;
+line-height:173%;font-family:"微软雅黑","sans-serif"'>输出</span></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>print</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>println</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474052"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.4<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>变量定义</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>定义赋值：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>x = 3</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>x = x * x <span style='color:#7F7F7F'># 9</span></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    x += 10 #
+19</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474053"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.5<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>变量类型</span></a></h2>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>类型</span></b></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Int</span><span
+  style='font-family:宋体'>：</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Int8 Int16 Int32
+  Int64</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Uint: </span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Uint8 Uint16
+  Uint32 Uint64</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Int</span><span
+  style='font-family:宋体'>为系统位数缺省的</span><span lang=EN-US style='font-family:
+  Consolas'>Int32</span><span style='font-family:宋体'>或者</span><span lang=EN-US
+  style='font-family:Consolas'>Int64</span><span style='font-family:宋体'>的别名，</span><span
+  lang=EN-US style='font-family:Consolas'>32</span><span style='font-family:
+  宋体'>位系统缺省是</span><span lang=EN-US style='font-family:Consolas'>Int32</span><span
+  style='font-family:宋体'>，</span><span lang=EN-US style='font-family:Consolas'>64</span><span
+  style='font-family:宋体'>位系统则为</span><span lang=EN-US style='font-family:Consolas'>Int64</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+  yellow'>typeof</span><span lang=EN-US style='font-family:Consolas'>(7) #
+  Int32</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typeof(2000000000)
+  # Int32</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typeof(3000000000)
+  # Int64</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+  yellow'>typemin</span><span lang=EN-US style='font-family:Consolas'>(Int8) #
+  -128</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+  yellow'>typemax</span><span lang=EN-US style='font-family:Consolas'>(Int8) #
+  127</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Bool</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>true</span><span
+  style='font-family:宋体'>也就是</span><span lang=EN-US style='font-family:Consolas'>1</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>false</span><span
+  style='font-family:宋体'>也就是</span><span lang=EN-US style='font-family:Consolas'>0</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Float32 Float64</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Inf</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>NaN</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typemin(Float32)
+  # -Inf</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typemax(Float32)
+  # Inf</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>5/0 # NaN</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>分数</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>//</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>num den</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>2/3 #
+  0.6666666666666</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>2<span
+  style='background:yellow'>//</span>3 # 2//3</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>2/3 ==
+  float(2//3)</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>2//3 == 6 //
+  9</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>复数</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>complex real
+  imag</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>conj</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>abs abs2</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>complex(3,4)
+  # 3+4<span style='background:yellow'>im</span></span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>conj(3<span
+  style='background:yellow'>+</span>4im) # 3<span style='background:yellow'>-</span>4im</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>abs(3+4im) #
+  5.0</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>abs2(3+4im)
+  # 25</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>sqrt(-1) #
+  NaN</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>sqrt(-1+0im)
+  # 0+1im</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>字符</span><span lang=EN-US
+  style='font-family:Consolas'> </span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>'a' '\u0fee'</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typeof </span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int char</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typeof('a')
+  # Char</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int('a') #
+  97</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>char(97) #
+  'a'</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>'z'-'a' # 25</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>char('a'+25)
+  # 'z'</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>字符串</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;a&quot;
+  </span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;cn\u4e2d\u6587&quot;==&quot;cn</span><span
+  style='font-family:宋体'>中文</span><span lang=EN-US style='font-family:Consolas'>&quot;</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体;color:red'>注</span><span
+  style='font-family:宋体'>：</span><span lang=EN-US style='font-family:Consolas'>Julia</span><span
+  style='font-family:宋体'>数组是从</span><b><span lang=EN-US style='font-family:
+  Consolas;color:red'>1</span></b><span style='font-family:宋体'>开始的</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;abcd&quot;[1]
+  # 'a'</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;abcd&quot;[end]
+  # 'd'</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;abcd&quot;[2:]
+  # &quot;bcd&quot;</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;abcd[1:3]
+  # &quot;abc&quot;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>正则表达式</span><span lang=EN-US
+  style='font-family:Consolas'>regex</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>r&quot;^abc&quot;</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>ismatch(<span
+  style='background:yellow'>r</span>&quot;<u>^ab.*de$</u>&quot;,
+  &quot;ab-abc-de&quot;) # true</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>match(<span
+  style='background:yellow'>r</span>&quot;abc&quot;,
+  &quot;ab-abc-de&quot;).match # &quot;abc&quot;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>tuple</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>(1,2,3,4)</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>(1,2,&quot;hello&quot;,4)[3]
+  # &quot;hello&quot;</span></p>
+  <p class=MsoNormal align=left style='text-align:left'><span lang=EN-US
+  style='font-family:Consolas'>typeof((1,2.3,&quot;a&quot;)) # (Int32,Float64,ASCIIString)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>数组</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>[10,20,30,40]</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>[10,20,30,40]<span
+  style='background:yellow'>[</span>3<span style='background:yellow'>]</span> #
+  30</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>hash map</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>m = <span
+  style='background:yellow'>{</span>1<span style='background:yellow'>=&gt;</span>10,2<span
+  style='background:yellow'>=&gt;</span>20,3<span style='background:yellow'>=&gt;</span>30<span
+  style='background:yellow'>}</span></span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>has(m,1) #
+  true</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>has(m,0) #
+  false</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>get(m,1,default)
+  # 10</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>get(m,0,-1)
+  # -1</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>keys(m) #
+  [2,1,3,4]</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>values(m) #
+  [20,10,30,40]</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=225 valign=top style='width:168.45pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Range</span></p>
+  </td>
+  <td width=383 valign=top style='width:287.4pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>1:10 ==
+  1:1:10 # </span><span style='font-family:宋体'>注意：步长在中间</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>10:<span
+  style='background:yellow'>-1</span>:1 # [10 9 8 7 6 5 4 3 2 1]</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>'a':'z'</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474054"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:Consolas'>2.6<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:Consolas'>number</span></a><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>数字</span></h2>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>函数</span></b></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typemin</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typemax</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>类型的最小最大值：</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typemax(Uint32)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int int8
+  int16 int32 int64</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>float
+  float32 float64</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>hex bin dec
+  oct</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span style='font-family:宋体'>类型转换</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int(1.49) #
+  1</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int(1.51) #
+  2</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>float(1) #
+  1.0</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>m^n</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>2^10 # </span><span
+  style='font-family:宋体'>求幂</span><span style='font-family:Consolas'> <span
+  lang=EN-US>1024</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas;color:red'>++
+  --</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>*</span><b><span
+  style='font-family:宋体'>没有</span></b><span lang=EN-US style='font-family:Consolas'>*
+  <span style='color:red'>++ --</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>+= -=</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>i = 3</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>i += 1, i -=
+  2</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>~ &amp; | $
+  &gt;&gt;&gt; &gt;&gt; &lt;&lt;</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>~0xf0 # </span><span
+  style='font-family:宋体'>求反</span><span lang=EN-US style='font-family:Consolas'>0x0f</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>0xf0 $ 0xff
+  # </span><span style='font-family:宋体'>异或</span><span style='font-family:Consolas'>
+  <span lang=EN-US>0x0f</span></span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>== != &gt;
+  &lt; &gt;= &lt;=</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>1==1.0 #
+  true</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>1 &lt; 2
+  &lt;= 3 # true</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>round iround</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>floor ceil</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>trunc itrunc</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>div rem</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>fld mod</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>gcd lcm</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>round(3.49)
+  # 3.0</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>round(3.5) #
+  4.0</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>iround(3.5)
+  # 4</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>itrunc(3.5)
+  # 3</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>rem </span><span
+  style='font-family:宋体'>也可以用</span><span lang=EN-US style='font-family:Consolas'>
+  % </span><span style='font-family:宋体'>表示</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>fld: Integer
+  <span style='background:yellow'>ﬂ</span>oor <span style='background:yellow'>d</span>ivision</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>lcm: <span
+  style='background:yellow'>L</span>east <span style='background:yellow'>c</span>ommon
+  <span style='background:yellow'>m</span>ultiple</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子：</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt'><span lang=EN-US
+style='font-family:Consolas'>for <span style='background:yellow'>T</span> =
+{Int8,Int16,Int32,Int64,Uint8,Uint16,Uint32,Uint64}</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(&quot;<span style='background:
+lime'>$</span>(lpad(<span style='background:yellow'>T</span>,6)): [<span
+style='background:lime'>$</span>(typemin(<span style='background:yellow'>T</span>)),<span
+style='background:lime'>$</span>(typemax(<span style='background:yellow'>T</span>))]&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt'><span lang=EN-US
+style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>输出：</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>  Int8:
+[-128,127]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'> Int16:
+[-32768,32767]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'> Int32:
+[-2147483648,2147483647]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'> Int64:
+[-9223372036854775808,9223372036854775807]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'> Uint8:
+[0x00,0xff]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Uint16:
+[0x0000,0xffff]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Uint32:
+[0x00000000,0xffffffff]</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>Uint64:
+[0x0000000000000000,0xffffffffffffffff]</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474055"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.7<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>string </span></a><span style='font-size:15.0pt;
+line-height:173%;font-family:"微软雅黑","sans-serif"'>字符串</span></h2>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=637
+ style='width:477.45pt;border-collapse:collapse;border:none'>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>函数</span></b></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>string</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>string(10),
+  string('a')</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>strcat</span></p>
+  <p class=MsoNormal><span style='font-family:宋体'>相当于</span><span lang=EN-US
+  style='font-family:Consolas'>java</span><span style='font-family:宋体'>的</span><span
+  lang=EN-US style='font-family:Consolas'>+</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>string ==
+  strcat</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>strcat(&quot;hello&quot;,
+  - , &quot;world&quot;) # &quot;hello-world&quot;</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>string(&quot;hello&quot;,
+  - , &quot;world&quot;)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>$</span></p>
+  <p class=MsoNormal><span style='font-family:宋体'>相当于文本模板如</span><span
+  lang=EN-US style='font-family:Consolas'>FreeMarker</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>x = 3</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;y=<span
+  style='background:yellow'>$</span><span style='background:lime'>(</span>x+1<span
+  style='background:lime'>)</span>*$x&quot; # &quot;y=4*3&quot;</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;y=&quot;<span
+  style='background:yellow'>$</span><span style='background:lime'>(</span>(x+1)x<span
+  style='background:lime'>)</span>&quot; # &quot;y=12&quot;</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&quot;v=<span
+  style='background:yellow'>$</span><span style='background:lime'>[</span>1,2*2,3*3<span
+  style='background:lime'>]</span>&quot; # &quot;v=[1, 4, 9]&quot;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>strlen,
+  length</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>strlen(&quot;cn</span><span
+  style='font-family:宋体'>中文</span><span lang=EN-US style='font-family:Consolas'>&quot;)
+  # 4</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>length(&quot;cn</span><span
+  style='font-family:宋体'>中文</span><span lang=EN-US style='font-family:Consolas'>&quot;)
+  # 8</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>strchr</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>strchr(&quot;cn</span><span
+  style='font-family:宋体'>中文</span><span lang=EN-US style='font-family:Consolas'>&quot;,
+  '</span><span style='font-family:宋体'>中</span><span lang=EN-US
+  style='font-family:Consolas'>') # 3</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>repeat</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>repeat(&quot;ab&quot;,10)
+  # &quot;abababababababababab&quot;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>ind2chr
+  chr2ind</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>byte</span><span
+  style='font-family:宋体'>数组和</span><span lang=EN-US style='font-family:Consolas'>string</span><span
+  style='font-family:宋体'>数组标号的转换：</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>ind2chr(&quot;cn</span><span
+  style='font-family:宋体'>中文</span><span lang=EN-US style='font-family:Consolas'>&quot;,6)
+  # 4</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>chr2ind(&quot;cn</span><span
+  style='font-family:宋体'>中文</span><span lang=EN-US style='font-family:Consolas'>&quot;,4)
+  # 6</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+  yellow'>b</span><span lang=EN-US style='font-family:Consolas'>&quot;abc&quot;</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>[0x61,0x62,0x63]</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>search</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>search(&quot;hello
+  world&quot;, &quot;wor&quot;) # (7,10)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>reverse</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>reverse(&quot;12345&quot;)
+  # &quot;54321&quot;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=207 valign=top style='width:155.25pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+  </td>
+  <td width=430 valign=top style='width:322.2pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474056"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.8<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>类型转换</span></a></h2>
+
+<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0
+ style='border-collapse:collapse;border:none'>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  lang=EN-US style='font-family:Consolas'>a-&gt;b</span></b></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal align=center style='text-align:center'><b><span
+  style='font-family:宋体'>说明</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>.. -&gt; string</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>string(10),
+  string('a'), strcat('a',10)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>string, char
+  -&gt; int, float</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int(&quot;10&quot;),
+  float(&quot;10.3&quot;), float('a')</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+  yellow'>base</span><span lang=EN-US style='font-family:Consolas'>(2,1024) # &quot;10000000000&quot;</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>parse_int(&quot;1024&quot;)</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>parse_bin(&quot;1001&quot;)</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>parse_hex(&quot;ff&quot;)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int &lt;-&gt;
+  float</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>int(10.3), float(7)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=313 valign=top style='width:234.9pt;border:solid windowtext 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>-&gt; Bool</span></p>
+  </td>
+  <td width=313 valign=top style='width:234.9pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>convert(Bool,
+  0) # false</span></p>
+  <p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>convert(Bool,
+  1) # true</span></p>
+  </td>
+ </tr>
+</table>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474057"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.9<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>if-elseif-else</span></a><span lang=EN-US
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'> </span></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>1</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>if</span><span lang=EN-US
+style='font-family:Consolas'> x &lt; y</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(&quot;x is less than y&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>elseif</span><span lang=EN-US
+style='font-family:Consolas'> x &gt; y</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(&quot;x is greater than
+y&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>else</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(&quot;x is equal to y&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>2</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>if</span><span lang=EN-US
+style='font-family:Consolas'> true</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(&quot;hello&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>3</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>3&gt;5 <span style='background:yellow'>?</span>
+&quot;&gt;&quot; <span style='background:yellow'>:</span> &quot;&lt;&quot;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474058"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.10<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>while</span></a><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>和<span
+lang=EN-US>for</span>循环</span></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>1</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>i=0</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>while</span><span lang=EN-US
+style='font-family:Consolas'> i &lt;= 5</span></p>
+
+<p class=MsoNormal style='margin-left:31.5pt'><span lang=EN-US
+style='font-family:Consolas'>println(i)</span></p>
+
+<p class=MsoNormal style='margin-left:31.5pt'><span lang=EN-US
+style='font-family:Consolas'>i+=1</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>2</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>for</span><span lang=EN-US
+style='font-family:Consolas'> i = 1<span style='background:lime'>:</span>5</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(i)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>3</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>for</span><span lang=EN-US
+style='font-family:Consolas'> i <span style='background:lime'>in</span> [2,4,6]</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(i)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>4</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>for</span><span lang=EN-US
+style='font-family:Consolas'> i <span style='background:lime'>in</span>
+&quot;cn</span><span style='font-family:宋体'>中文</span><span lang=EN-US
+style='font-family:Consolas'>.&quot;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println(i)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>for</span><span lang=EN-US
+style='font-family:Consolas'> i = 1<span style='background:lime'>:</span>2, j =
+3<span style='background:lime'>:</span>4</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>println((i, j))</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal style='text-indent:10.5pt'><span style='font-family:宋体'>输出：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>(1,3)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>(1,4)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>(2,3)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>(2,4)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474059"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.11<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>数组</span></a></h2>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>[<span style='background:lime'>x</span>*<span
+style='background:lime'>x</span> <span style='background:yellow'>for</span> <span
+style='background:lime'>x</span> in [2 4 6]] # [4 16 36]</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>[<span style='background:lime'>x</span>*<span
+style='background:lime'>y</span> <span style='background:yellow'>for</span> <span
+style='background:lime'>x</span>=[1:3],<span style='background:lime'>y</span>=[4:6]]</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>输出结果：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>3x3 Int32 Array:</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>  4   5   6</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>  8  10  12</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'> 12  15  18</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>vcat([1,2,3],[4,5,6]) # [1 2 3 4 5 6]</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>hcat([1,2,3],[4,5,6])</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>输出：</span><span lang=EN-US
+style='font-family:Consolas'>3x2 Int32 Array:</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'> 1  4</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'> 2  5</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'> 3  6</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474060"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.12<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>try-catch</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>1</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(x) = x&gt;=0 ? sqrt(x) : <span style='background:
+yellow'>error</span>(&quot;x&lt;0&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>g(x) = <span style='background:yellow'>try</span>
+f(x) <span style='background:yellow'>catch</span> f(-x) <span style='background:
+yellow'>end</span></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>g(-2) # 1.4142135623730951</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>sqrt(-2) # NaN</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>2</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(x) = x&gt;=0 ? sqrt(x) : <span style='background:
+yellow'>error</span>(&quot;x&lt;0&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>g(x) = <span style='background:yellow'>try</span>
+f(x) <span style='background:yellow'>catch</span> <span style='background:lime'>e</span></span></p>
+
+<p class=MsoNormal style='margin-left:63.0pt;text-indent:10.5pt'><span
+lang=EN-US style='font-family:Consolas'>println(&quot;Exception is: &quot;, <span
+style='background:lime'>e</span>); </span></p>
+
+<p class=MsoNormal style='margin-left:63.0pt;text-indent:10.5pt'><span
+lang=EN-US style='font-family:Consolas'>f(-x) </span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>g(-2)</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt'><span style='font-family:宋体'>输出：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>Exception is: x&lt;0</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>1.4142135623730951</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474061"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.13<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>运行系统命令</span></a></h2>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>run(<span style='background:yellow'>`</span>ls<span
+style='background:yellow'>`</span>)</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>run(<span style='background:yellow'>`</span>echo
+hello<span style='background:yellow'>`</span>)</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>run(<span style='background:yellow'>`</span>ls<span
+style='background:yellow'>`</span> | <span style='background:yellow'>`</span>grep
+js<span style='background:yellow'>`</span>)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474062"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.14<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>算术表达式的函数表示</span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>julia&gt;
+:(a+b*c-1)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>:( -(+(a, *(b,
+c)), 1) )</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>eval(:(3+5*2))
+# 13</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474063"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.15<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>macro</span></a><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>宏</span></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>定义：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>macro</span><span lang=EN-US
+style='font-family:Consolas'> time(<span style='background:lime'>ex</span>)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>  <span style='background:yellow'>quote</span></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>    local t0 = time()</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>    local val = <span style='background:yellow'>$</span><span
+style='background:lime'>ex</span></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>    local t1 = time()</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>    println(&quot;elapsed time: &quot;, t1-t0,
+&quot; seconds&quot;)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>    val</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>  <span style='background:yellow'>end</span></span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>调用：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>@</span><span lang=EN-US
+style='font-family:Consolas'>time begin</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>         local t = 0</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>         for i = 1:10000000</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>           t += i</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>         end</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>         t</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>       end</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>输出：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>elapsed time: 1.1377708911895752 seconds</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>50000005000000</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474064"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.16<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>调用<span
+lang=EN-US>C</span></span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子：</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>libc = <span
+style='background:lime'>dlopen</span>(&quot;libc.so.6&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>f = <span
+style='background:lime'>dlsym</span>(libc, <span style='background:yellow'>:clock</span>)
+# :clock</span><span style='font-family:宋体'>是</span><span lang=EN-US
+style='font-family:Consolas'>C</span><span style='font-family:宋体'>函数名</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>t = <span
+style='background:lime'>ccall</span>(f, Int32, ()) # t=6080000</span><span
+style='font-family:宋体'>，</span><span lang=EN-US style='font-family:Consolas'>Int32</span><span
+style='font-family:宋体'>为返回类型</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>typeof(t) # Int32</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474065"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.17<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>调用<span
+lang=EN-US>Python</span></span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子：（</span><span lang=EN-US
+style='font-family:Consolas'>&quot;libpython&quot;</span><span
+style='font-family:宋体'>可能需要换成</span><span lang=EN-US style='font-family:Consolas'>&quot;libpython2.5.so.1&quot;</span><span
+style='font-family:宋体'>之类的）</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>------------------------------------------</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>libpython = <span
+style='background:lime'>dlopen</span>(&quot;libpython&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+lime'>ccall</span><span lang=EN-US style='font-family:Consolas'>(<span
+style='background:lime'>dlsym</span>(libpython,:Py_Initialize), Void, ()) # </span><span
+style='font-family:宋体'>无参数</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas;background:
+lime'>ccall</span><span lang=EN-US style='font-family:Consolas'>(<span
+style='background:lime'>dlsym</span>(libpython,:PyRun_SimpleString), Int32,</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Ptr{Uint8},), &quot;print 'Hello from
+Python.'&quot;) # </span><span style='font-family:宋体'>有参数</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'># Hello from
+Python.</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'># 0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>------------------------------------------</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474066"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>2.18<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>其他</span></a><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>
+</span></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h1><a name="_Toc337474067"><span lang=EN-US style='font-size:16.0pt;
+line-height:240%;font-family:"微软雅黑","sans-serif"'>3、<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:16.0pt;line-height:240%;font-family:"微软雅黑","sans-serif"'>函数</span></a></h1>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474068"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>3.1<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>命名及定义</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>小写单词加下划线如：</span><span
+lang=EN-US style='font-family:Consolas'>abs_float</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>+ - * / </span><span
+style='font-family:宋体'>也是函数名：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>+ (3, 4) # 7</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>*(1,2,3,4,5) # 120</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f = +</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>定义方式</span><span lang=EN-US
+style='font-family:Consolas'>1</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>function</span><span lang=EN-US
+style='font-family:Consolas'> f(x,y)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>x+y</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span style='font-family:宋体'>最后一个表达式的值可以直接作为返回值，</span><span
+lang=EN-US style='font-family:Consolas'>return</span><span style='font-family:
+宋体'>可省略</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>定义方式</span><span lang=EN-US
+style='font-family:Consolas'>2</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(x,y) = x+y</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>g = f</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>g(3,4) # 7</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>apply</span><span lang=EN-US
+style='font-family:Consolas'>(f,3,4) # 7</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474069"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>3.2<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>变长参数</span></a></h2>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(a,b,x<span style='background:yellow'>...</span>)
+= (a,b,x)</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(1,2) # (1,2,())</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(1,2,3) # (1,2,(3))</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(1,2,3,4,5) # (1,2,(3,4,5))</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>又如：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(a,b) = a+b</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>x = [3,4]</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(x) # </span><span style='font-family:宋体'>报错</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(x<span style='background:yellow'>...</span>) # 7</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474070"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>3.3<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>多返回值</span></a></h2>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(x,y) = x+y, x*y</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>f(3,4) # (7,12)</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>a,b = f(3,4) # a=7, b=12</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474071"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>3.4<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>匿名函数</span></a></h2>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:lime'>f</span><span lang=EN-US
+style='font-family:Consolas'> = x <span style='background:yellow'>-&gt;</span>
+x*x</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:lime'>f</span><span lang=EN-US
+style='font-family:Consolas'>(3) # 9</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>各种形式：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>x <span style='background:yellow'>-&gt;</span> x*x</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>(x,y) <span style='background:yellow'>-&gt;</span>
+x+y</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>() <span style='background:yellow'>-&gt;</span>
+println(&quot;hello world&quot;)</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>(x,y) <span style='background:yellow'>-&gt;</span>
+<span style='background:yellow'>begin</span> print(&quot;start:&quot;); x+y <span
+style='background:yellow'>end</span></span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例如：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>map(x-&gt;x*x, [1,2,3,4,5]) # [1,4,9,16,25]</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>map((x,y)-&gt;x+y, [1,2,3], [10,20,30]) #
+[11,22,33]</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>apply(()-&gt;3) # 3</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>apply((x,y) <span style='background:yellow'>-&gt;</span>
+<span style='background:yellow'>begin</span> print(&quot;start:&quot;); x+y <span
+style='background:yellow'>end</span>, 3, 4) # &quot;start:7&quot;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>或直接用括号包围</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>apply((x,y) <span style='background:yellow'>-&gt;</span>
+<span style='background:yellow'>(</span> print(&quot;start:&quot;); x+y <span
+style='background:yellow'>)</span>, 3, 4) # &quot;start:7&quot;</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>注：</span><span lang=EN-US
+style='font-family:Consolas'>begin..end </span><span style='font-family:宋体'>类似于</span><span
+lang=EN-US style='font-family:Consolas'>Clojure</span><span style='font-family:
+宋体'>的</span><span lang=EN-US style='font-family:Consolas'> (do ..)</span><span
+style='font-family:宋体'>，所以</span><span lang=EN-US style='font-family:Consolas'>julia</span><span
+style='font-family:宋体'>还有一个关键字</span><span lang=EN-US style='font-family:Consolas'>do</span><span
+style='font-family:宋体'>如下</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474072"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>3.5<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span lang=EN-US style='font-size:15.0pt;line-height:173%;
+font-family:"微软雅黑","sans-serif"'>do</span></a><span style='font-size:15.0pt;
+line-height:173%;font-family:"微软雅黑","sans-serif"'>块函数</span></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>1</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>map([-2,0,3]) <span style='background:yellow'>do</span>
+<span style='background:lime'>x</span></span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>if <span style='background:lime'>x</span>
+&lt; 0 &amp;&amp; iseven(<span style='background:lime'>x</span>)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>return 0</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>elseif <span style='background:lime'>x</span>
+== 0</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>return 1</span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>else</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>return <span style='background:lime'>x</span></span></p>
+
+<p class=MsoNormal style='margin-left:10.5pt;text-indent:21.0pt'><span
+lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>例子</span><span lang=EN-US
+style='font-family:Consolas'>2</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>cd(&quot;data&quot;) <span style='background:yellow'>do</span></span></p>
+
+<p class=MsoNormal style='margin-left:31.5pt'><span lang=EN-US
+style='font-family:Consolas'>open(&quot;outfile&quot;, &quot;w&quot;) <span
+style='background:yellow'>do</span> <span style='background:lime'>f</span></span></p>
+
+<p class=MsoNormal style='margin-left:31.5pt;text-indent:10.5pt'><span
+lang=EN-US style='font-family:Consolas'>write(<span style='background:lime'>f</span>,
+data)</span></p>
+
+<p class=MsoNormal style='margin-left:31.5pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>end</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<h1><a name="_Toc337474073"><span lang=EN-US style='font-size:16.0pt;
+line-height:240%;font-family:"微软雅黑","sans-serif"'>4、<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:16.0pt;line-height:240%;font-family:"微软雅黑","sans-serif"'>并行计算</span></a></h1>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474074"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>4.1<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>命令行启动设置</span></a></h2>
+
+<p class=MsoNormal><span style='font-family:宋体'>以下命名启动两个</span><span
+lang=EN-US style='font-family:Consolas'>julia</span><span style='font-family:
+宋体'>进程</span></p>
+
+<p class=MsoNormal style='text-indent:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>julia –p 2</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474075"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>4.2<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>多进程</span></a></h2>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span style='font-family:宋体'>例子</span><span
+lang=EN-US style='font-family:Consolas'>1</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas'>function count_heads(n)</span></p>
+
+<p class=MsoNormal style='margin-left:52.5pt'><span lang=EN-US
+style='font-family:Consolas'>c::Int = 0</span></p>
+
+<p class=MsoNormal style='margin-left:52.5pt'><span lang=EN-US
+style='font-family:Consolas'>for i=1:n</span></p>
+
+<p class=MsoNormal style='margin-left:52.5pt;text-indent:10.5pt'><span
+lang=EN-US style='font-family:Consolas'>c += randbit()</span></p>
+
+<p class=MsoNormal style='margin-left:52.5pt'><span lang=EN-US
+style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal style='margin-left:52.5pt'><span lang=EN-US
+style='font-family:Consolas'>c</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas'>a = <span style='background:yellow'>@spawn</span>
+count_heads(100000000)</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas'>b = <span style='background:yellow'>@spawn</span>
+count_heads(100000000)</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas;background:yellow'>fetch</span><span lang=EN-US
+style='font-family:Consolas'>(a)+<span style='background:yellow'>fetch</span>(b)</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span lang=EN-US
+style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:21.0pt'><span style='font-family:宋体'>例子</span><span
+lang=EN-US style='font-family:Consolas'>2</span><span style='font-family:宋体'>：</span></p>
+
+<p class=MsoNormal style='margin-left:42.0pt'><span lang=EN-US
+style='font-family:Consolas'>nheads = <span style='background:yellow'>@parallel</span>
+(+) for i=1:200000000</span></p>
+
+<p class=MsoNormal style='margin-left:94.5pt;text-indent:10.5pt'><span
+lang=EN-US style='font-family:Consolas'>randbit()</span></p>
+
+<p class=MsoNormal style='margin-left:94.5pt'><span lang=EN-US
+style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<h1><a name="_Toc337474076"><span lang=EN-US style='font-size:16.0pt;
+line-height:240%;font-family:"微软雅黑","sans-serif"'>5、<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:16.0pt;line-height:240%;font-family:"微软雅黑","sans-serif"'>附录</span></a></h1>
+
+<h2 style='margin-left:45.0pt;text-indent:-45.0pt'><a name="_Toc337474077"><span
+lang=EN-US style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>5.1<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span style='font-size:15.0pt;line-height:173%;font-family:"微软雅黑","sans-serif"'>程序实例——<span
+lang=EN-US>Project Euler</span></span></a></h2>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'><a
+href="http://projecteuler.net/problems">http://projecteuler.net/problems</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'><a
+href="http://pe.spiritzhang.com/">http://pe.spiritzhang.com/</a></span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>1</span><span style='font-family:宋体'>：找出</span><span
+lang=EN-US style='font-family:Consolas'>1000</span><span style='font-family:
+宋体'>以下自然数中</span><span lang=EN-US style='font-family:Consolas'>3</span><span
+style='font-family:宋体'>和</span><span lang=EN-US style='font-family:Consolas'>5</span><span
+style='font-family:宋体'>的倍数之和。</span><span lang=EN-US style='font-family:Consolas'> 
+</span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>2</span><span style='font-family:宋体'>：在斐波那契数列中，找出</span><span
+lang=EN-US style='font-family:Consolas'>4</span><span style='font-family:宋体'>百万以下的项中值为偶数的项之和。</span><span
+lang=EN-US style='font-family:Consolas'>  </span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>3</span><span style='font-family:宋体'>：找出一个合数的最大质数因子</span><span
+lang=EN-US style='font-family:Consolas'>   </span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>4</span><span style='font-family:宋体'>：找出由两个三位数乘积构成的回文。</span><span
+lang=EN-US style='font-family:Consolas'>  </span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>5</span><span style='font-family:宋体'>：找出最小的能被</span><span
+lang=EN-US style='font-family:Consolas'>1-20</span><span style='font-family:
+宋体'>中每个数整除的数。</span><span lang=EN-US style='font-family:Consolas'>    </span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>6</span><span style='font-family:宋体'>：平方和与和平方的差是多少？</span><span
+lang=EN-US style='font-family:Consolas'>   </span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>7</span><span style='font-family:宋体'>：找出第</span><span
+lang=EN-US style='font-family:Consolas'>10001</span><span style='font-family:
+宋体'>个质数。</span><span lang=EN-US style='font-family:Consolas'>    </span></p>
+
+<p class=MsoNormal><span style='font-family:宋体'>题目</span><span lang=EN-US
+style='font-family:Consolas'>8</span><span style='font-family:宋体'>：找出这个</span><span
+lang=EN-US style='font-family:Consolas'>1000</span><span style='font-family:
+宋体'>位数字中连续</span><span lang=EN-US style='font-family:Consolas'>5</span><span
+style='font-family:宋体'>个数字乘积的最大值。</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>---------------------------------------------------</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj1</span>() </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    rt = 0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    for
+i=1:999</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+i%3==0 || i%5==0 rt += i end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(rt)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj2</span>() </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    s = 0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    i,j = 1,2</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    while i
+&lt; 4000000</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+i%2==0 s += i end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       i,j =
+j, i+j</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(s)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function
+is_prime(n) </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    if n&lt;2 
+return false end </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    if n==2
+return true end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    i = 2 </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    while
+i*i&lt;=n</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+n%i==0 return false end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       i += 1     </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    return
+true</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj3</span>()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    n = 600851475143</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    rt = 0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    i =
+int(sqrt(n))</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    while true
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+n%i==0 &amp;&amp; is_prime(i)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           rt
+= i</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           break</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       i -= 1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(rt)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function f4(n)
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    for
+i=999:-1:1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       in =
+i*n</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+string(in)==reverse(string(in)) return in end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    return -1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj4</span>() </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    max = -1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    for
+i=999:-1:1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       n =
+f4(i)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+n&gt;=max max = n end       </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(max)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function
+mod20(n) </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    for i=2:20</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if n%i
+!= 0 return false end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    return
+true</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj5</span>()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    rt5,i0 =
+0, 2*3*5*7*11*13*17*19</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    i = i0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    while true</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+mod20(i)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           rt5
+= i</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           break</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       i += i0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(rt5)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj6</span>() </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    s1,s2 =
+5050*5050,0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    for
+i=1:100</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       s2 +=
+i*i</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(s1-s2)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj7</span>()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    rt7 = 3</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    i1,n = 1,3</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    while
+i1&lt;10001</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+is_prime(n) </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           i1
++= 1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           rt7
+= n</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       n+=2</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(rt7)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>function <span
+style='background:yellow'>prj8</span>()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    s8 =
+string(&quot;73167176531330624919225119674426574742355349194934&quot;, </span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;96983520312774506326239578318016984801869478851843&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;85861560789112949495459501737958331952853208805511&quot;,</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;12540698747158523863050715693290963295227443043557&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;66896648950445244523161731856403098711121722383113&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;62229893423380308135336276614282806444486645238749&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;30358907296290491560440772390713810515859307960866&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;70172427121883998797908792274921901699720888093776&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;65727333001053367881220235421809751254540594752243&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;52584907711670556013604839586446706324415722155397&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;53697817977846174064955149290862569321978468622482&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;83972241375657056057490261407972968652414535100474&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>               &quot;82166370484403199890008895243450658541227588666881&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;16427171479924442928230863465674813919123162824586&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;17866458359124566529476545682848912883142607690042&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;24219022671055626321111109370544217506941658960408&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;07198403850962455444362981230987879927244284909188&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;84580156166097919133875499200524063689912560717606&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;05886116467109405077541002256983155200055935729725&quot;,
+</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>              &quot;71636269561882670428252483600823257530420752963450&quot;)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    max8 = 0</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    n,i =
+strlen(s8),1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    while
+i&lt;n-5</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>        s = 1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       for
+j=0:4</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>           s
+*= s8[i+j] - '0'</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       if
+s&gt;max8 max8 = s end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>       i+=1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>    println(max8)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj1()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj2()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj3()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj4()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj5()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj6()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj7()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>prj8()</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>---------------------------------------------------</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-family:Consolas'>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
